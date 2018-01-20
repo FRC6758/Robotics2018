@@ -5,18 +5,19 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package org.usfirst.frc.team6758.robot;
+package org.usfirst.frc.team6758.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.Button;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.command.Subsystem;
 
+/**
+ * An example subsystem.  You can replace me with your own Subsystem.
+ */
+public class ExampleSubsystem extends Subsystem {
+	// Put methods for controlling this subsystem
+	// here. Call these from Commands.
 
-public class OI {
-	//// CREATING BUTTONS
-	// Defining a new joystick on port 0
-	public static Joystick stick = new Joystick(0);
-	
-	// Defining a new Button button (Button 0) on Joystick stick
-	Button button = new JoystickButton(stick, 0);
+	public void initDefaultCommand() {
+		// Set the default command for a subsystem here.
+		// setDefaultCommand(new MySpecialCommand());
+	}
 }
