@@ -7,6 +7,11 @@
 
 package org.usfirst.frc.team6758.robot;
 
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoSource;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
@@ -16,25 +21,16 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import org.opencv.core.Mat;
+import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team6758.robot.commands.ExampleCommand;
 import org.usfirst.frc.team6758.robot.subsystems.Encoders;
 import org.usfirst.frc.team6758.robot.subsystems.Pneumatics;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-/**
- *  Information
- * 
- *  This is the main robot code for our robot 
- *  in the 2018 FRC game Power Up
- *  
- *  Last updated on 1/15/2018 - Version 0.9.2
- *  
- *  -ADDED TalonSRX variables
- *  -FIXED location of variables for pneumatics, and encoders
- *  
- *  Current Version 0.9.2
- */
+
 public class Robot extends TimedRobot {
 	public static OI m_oi;
 
@@ -44,6 +40,10 @@ public class Robot extends TimedRobot {
 	
 	Command m_autonomousCommand;
 	SendableChooser<Command> m_chooser = new SendableChooser<>();
+	
+	public UsbCamera camera;
+	public Mat source, output;
+	public GripPipeline grip;
 	
 	public static Compressor compressor = new Compressor(0);
 
@@ -61,6 +61,33 @@ public class Robot extends TimedRobot {
 		
 		Pneumatics.testSolenoid.set(DoubleSolenoid.Value.kForward);
 		driveTrain = new MecanumDrive(frontLeft, backLeft, frontRight, backRight);
+		
+		grip = new GripPipeline();
+		
+		new Thread(() -> {
+            UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+            camera.setResolution(640, 480);
+            
+            CvSink cvSink = CameraServer.getInstance().getVideo();
+            CvSource outputStream = CameraServer.getInstance().putVideo("Blur", 640, 480);
+            
+            source = new Mat();
+            output = new Mat();
+            
+            while(!Thread.interrupted()) {
+                cvSink.grabFrame(source);
+                //Imgproc.cvtColor(source, output, Imgproc.COLOR_BayerRG2BGR);
+                outputStream.putFrame(output);
+            }
+        }).start();
+		
+//		camera = CameraServer.getInstance().startAutomaticCapture();
+//		
+//		source = new Mat();
+//		CvSink input = CameraServer.getInstance().getVideo();
+//    	
+//    	input.grabFrame(source);
+    	
 	}
 	
 	@Override
@@ -115,7 +142,8 @@ public class Robot extends TimedRobot {
 		
 		driveTrain.driveCartesian(stick.getX(), stick.getY(), stick.getTwist());
 		
-
+		grip.process(source);
+		
 	}
 
 	@Override
