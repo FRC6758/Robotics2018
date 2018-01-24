@@ -70,13 +70,7 @@ public class GripPipeline {
 		ArrayList<MatOfPoint> convexHullsContours = filterContoursOutput;
 		convexHulls(convexHullsContours, convexHullsOutput);
 		
-<<<<<<< HEAD
-		MatOfPoint cont = filterContoursOutput.remove(0);
-		
-		findValues(cont);
-=======
 		findValues(filterContoursOutput);
->>>>>>> Robotics/master
 
 	}
 
@@ -225,25 +219,18 @@ public class GripPipeline {
 
 	
 public void findValues(List<MatOfPoint> cont) {
-<<<<<<< HEAD
-		
-		Rect object = Imgproc.boundingRect(cont);
-=======
+
 		for(int i=0; i<cont.size(); i++){
 			
 		Rect object = Imgproc.boundingRect(cont.remove(i));
->>>>>>> Robotics/master
 		
 		System.out.print("H: " + object.height);
 		System.out.print(" W: " + object.width);
 		System.out.print(" Area: " + object.area());
 		System.out.print(" X: " + object.x);
 		System.out.println(" Y: " + object.y);
-<<<<<<< HEAD
-
-=======
+		
 		}
->>>>>>> Robotics/master
 }
 
 
