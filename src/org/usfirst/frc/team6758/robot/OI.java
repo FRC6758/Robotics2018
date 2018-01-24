@@ -7,6 +7,8 @@
 
 package org.usfirst.frc.team6758.robot;
 
+import org.usfirst.frc.team6758.robot.subsystems.Pneumatics;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -19,4 +21,18 @@ public class OI {
 	
 	// Defining a new Button button (Button 0) on Joystick stick
 	Button button = new JoystickButton(stick, 0);
+	Button grabButton = new JoystickButton(stick, 2);
+	
+	public OI() {
+		
+		if(stick.getTrigger()) {
+			Pneumatics.pushBlock();
+		}
+		else {
+			Pneumatics.retract();
+		}
+		
+		
+		
+	}
 }

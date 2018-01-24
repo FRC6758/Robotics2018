@@ -53,7 +53,6 @@ public class Robot extends TimedRobot {
 		m_chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
-		Pneumatics.testSolenoid.set(DoubleSolenoid.Value.kForward);
 		
 		grip = new GripPipeline();
 		
@@ -125,13 +124,6 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		System.out.println(Encoders.enc0.getDistance());
-		
-		if(OI.stick.getTrigger()) {
-			Pneumatics.testSolenoid.set(DoubleSolenoid.Value.kReverse);
-		}
-		else{
-			Pneumatics.testSolenoid.set(DoubleSolenoid.Value.kForward);
-		}
 		
 		driveTrain.driveCartesian(stick.getX(), stick.getY(), stick.getTwist());
 		
