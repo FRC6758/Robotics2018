@@ -53,14 +53,7 @@ public class Robot extends TimedRobot {
 		m_chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
-		
-		WPI_TalonSRX frontLeft = new WPI_TalonSRX(0);
-		WPI_TalonSRX frontRight = new WPI_TalonSRX(1);
-		WPI_TalonSRX backLeft = new WPI_TalonSRX(2);
-		WPI_TalonSRX backRight = new WPI_TalonSRX(3);
-		
 		Pneumatics.testSolenoid.set(DoubleSolenoid.Value.kForward);
-		driveTrain = new MecanumDrive(frontLeft, backLeft, frontRight, backRight);
 		
 		grip = new GripPipeline();
 		

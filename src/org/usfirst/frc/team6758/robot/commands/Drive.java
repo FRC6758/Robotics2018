@@ -1,5 +1,9 @@
 package org.usfirst.frc.team6758.robot.commands;
 
+import org.usfirst.frc.team6758.robot.OI;
+import org.usfirst.frc.team6758.robot.subsystems.DriveTrain;
+
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -7,9 +11,11 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class Drive extends Command {
 
+	Joystick stick = OI.stick;
+	
     public Drive() {
         // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+        requires(new DriveTrain());
     }
 
     // Called just before this Command runs the first time
@@ -18,6 +24,7 @@ public class Drive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	DriveTrain.driveTrain.arcadeDrive(stick.getX(), stick.getTwist());
     }
 
     // Make this return true when this Command no longer needs to run execute()
