@@ -35,12 +35,7 @@ public class OI {
 			Pneumatics.retract();
 		}
 		
-		
-		
 		grabButton.whenPressed(new Grab());
 		grabButton.whenReleased(new Release());
-		
-		
-		
 	}
 }
