@@ -24,6 +24,13 @@ public class OI {
 	// Defining a new Button button (Button 0) on Joystick stick
 	Button button = new JoystickButton(stick, 0);
 	Button grabButton = new JoystickButton(stick, 2);
+	Button Arm180 = new JoystickButton(stick, 3);
+	Button Arm0 = new JoystickButton(stick, 4);
+	Button Arm135 = new JoystickButton(stick, 5);
+	Button Arm45 = new JoystickButton(stick, 6);
+
+	
+	
 	boolean trigger = stick.getTrigger();
 	
 	public OI() {
