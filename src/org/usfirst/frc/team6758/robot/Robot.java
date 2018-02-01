@@ -7,13 +7,8 @@
 
 package org.usfirst.frc.team6758.robot;
 
-import edu.wpi.cscore.CvSink;
-import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
-import edu.wpi.cscore.VideoSource;
-import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -23,12 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.opencv.core.Mat;
-import org.opencv.imgproc.Imgproc;
-import org.usfirst.frc.team6758.robot.commands.ExampleCommand;
 import org.usfirst.frc.team6758.robot.subsystems.Encoders;
-import org.usfirst.frc.team6758.robot.subsystems.Pneumatics;
-
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 
 public class Robot extends TimedRobot {
@@ -50,28 +40,28 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		m_oi = new OI();
-		m_chooser.addDefault("Default Auto", new ExampleCommand());
+		//m_chooser.addDefault("Default Auto", new ExampleCommand());
 		// chooser.addObject("My Auto", new MyAutoCommand());
 		SmartDashboard.putData("Auto mode", m_chooser);
 		
-		grip = new GripPipeline();
+		//grip = new GripPipeline();
 		
-		new Thread(() -> {
-            UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-            camera.setResolution(640, 480);
-            
-            CvSink cvSink = CameraServer.getInstance().getVideo();
-            CvSource outputStream = CameraServer.getInstance().putVideo("Blur", 640, 480);
-            
-            source = new Mat();
-            output = new Mat();
-            
-            while(!Thread.interrupted()) {
-                cvSink.grabFrame(source);
-                //Imgproc.cvtColor(source, output, Imgproc.COLOR_BayerRG2BGR);
-                outputStream.putFrame(output);
-            }
-        }).start();
+//		new Thread(() -> {
+//            UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+//            camera.setResolution(640, 480);
+//            
+//            CvSink cvSink = CameraServer.getInstance().getVideo();
+//            CvSource outputStream = CameraServer.getInstance().putVideo("Blur", 640, 480);
+//            
+//            source = new Mat();
+//            output = new Mat();
+//            
+//            while(!Thread.interrupted()) {
+//                cvSink.grabFrame(source);
+//                //Imgproc.cvtColor(source, output, Imgproc.COLOR_BayerRG2BGR);
+//                outputStream.putFrame(output);
+//            }
+//        }).start();
 		
 //		camera = CameraServer.getInstance().startAutomaticCapture();
 //		
@@ -123,11 +113,12 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		System.out.println(Encoders.enc0.getDistance());
 		
-		driveTrain.driveCartesian(stick.getX(), stick.getY(), stick.getTwist());
+		SmartDashboard.putNumber("Throttle", OI.stick.getThrottle());
 		
-		grip.process(source);
+		SmartDashboard.putNumber("Encoder0 Distance: ", Encoders.enc0.getDistance());
+		SmartDashboard.putNumber("Encoder1 Distance: ", Encoders.enc1.getDistance());
+		//grip.process(source);
 		
 	}
 

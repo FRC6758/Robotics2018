@@ -7,7 +7,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.drive.MecanumDrive;
 
 public class DriveTrain extends Subsystem {
 
@@ -22,9 +21,21 @@ public class DriveTrain extends Subsystem {
 	
 	public static DifferentialDrive driveTrain = new DifferentialDrive(left, right); 
 	
+	public static boolean front;
+	
 	@Override
 	protected void initDefaultCommand() {
 		setDefaultCommand(new Drive());
-	}	
+	}
+
+	public static boolean getFront() {
+		return front;
+	}
+
+	public static void setFront(boolean front) {
+		DriveTrain.front = front;
+	}
+
+	
 
 }

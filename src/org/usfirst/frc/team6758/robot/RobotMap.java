@@ -7,21 +7,17 @@
 
 package org.usfirst.frc.team6758.robot;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 
 public class RobotMap {
-	//Port numbers
-	//PWM
-	
 	//DIO
 	public static int enc0APort = 0, enc0BPort = 1,
 			enc1APort = 2, enc1BPort = 3;
 	
-	//AIO
+	//PCM
+	public static int grabberPort1 = 0, grabberPort2 = 1;
 	
-	//CAN
-	
-	//USB to RoboRio
-	
-	//USB to Computer
+	//Limit Switch
+	public static DigitalInput limitSwitch0, limitSwitch180;
 	
 }

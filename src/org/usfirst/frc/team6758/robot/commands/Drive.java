@@ -24,7 +24,9 @@ public class Drive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	DriveTrain.driveTrain.arcadeDrive(stick.getX(), stick.getTwist());
+    	
+    	if(DriveTrain.front) DriveTrain.driveTrain.arcadeDrive(stick.getY(), stick.getTwist());
+    	else DriveTrain.driveTrain.arcadeDrive(-stick.getY(), stick.getTwist());
     }
 
     // Make this return true when this Command no longer needs to run execute()

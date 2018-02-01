@@ -8,12 +8,10 @@
 package org.usfirst.frc.team6758.robot;
 
 import org.usfirst.frc.team6758.robot.commands.*;
-import org.usfirst.frc.team6758.robot.subsystems.Pneumatics;
-
+import org.usfirst.frc.team6758.robot.subsystems.Flywheels;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.buttons.Trigger;
 
 
 public class OI {
@@ -28,21 +26,25 @@ public class OI {
 	Button Arm0 = new JoystickButton(stick, 4);
 	Button Arm135 = new JoystickButton(stick, 5);
 	Button Arm45 = new JoystickButton(stick, 6);
-
-	
+	Button driveCode = new JoystickButton(stick, 11);
 	
 	boolean trigger = stick.getTrigger();
 	
 	public OI() {
 		
-		if(trigger) {
-			Pneumatics.pushBlock();
-		}
-		else {
-			Pneumatics.retract();
-		}
-		
 		grabButton.whenPressed(new Grab());
 		grabButton.whenReleased(new Release());
+		
+		driveCode.whenPressed(new FlipCode());
+		
+		if(stick.getThrottle() < 0) {
+			new Throw();
+		}
+		else if(stick.getThrottle() > 0) {
+			new Catch();
+		}
+		else {
+			Flywheels.off();
+		}
 	}
 }
