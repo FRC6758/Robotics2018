@@ -81,9 +81,9 @@ public class Robot extends TimedRobot {
 	
 		camera = CameraServer.getInstance().startAutomaticCapture(0);
 		
-		//sock = new Socket();
-		//Thread thr = new Thread(new CommsThread());
-		//thr.start();
+		sock = new Socket();
+		Thread thr = new Thread(new CommsThread());
+		thr.start();
 		
 //		
 //		source = new Mat();
