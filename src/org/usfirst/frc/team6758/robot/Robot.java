@@ -7,8 +7,20 @@
 
 package org.usfirst.frc.team6758.robot;
 
+import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
+
+import org.opencv.core.Mat;
+import org.usfirst.frc.team6758.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team6758.robot.subsystems.Flywheels;
+import org.usfirst.frc.team6758.robot.subsystems.Pneumatics;
+import org.usfirst.frc.team6758.robot.subsystems.ThorsHammer;
+
 import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -17,12 +29,11 @@ import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import org.opencv.core.Mat;
-import org.usfirst.frc.team6758.robot.subsystems.Encoders;
-
 
 public class Robot extends TimedRobot {
 	public static OI m_oi;
+	
+	private boolean toggle = true;
 
 	public static MecanumDrive driveTrain;
 	
@@ -37,6 +48,11 @@ public class Robot extends TimedRobot {
 	
 	public static Compressor compressor = new Compressor(0);
 
+	public static Encoder enc0 = new Encoder(0, 1);
+	public static Encoder enc1 = new Encoder(2, 3, false, Encoder.EncodingType.k4X);
+	
+	public static Socket sock;
+	
 	@Override
 	public void robotInit() {
 		m_oi = new OI();
@@ -62,8 +78,13 @@ public class Robot extends TimedRobot {
 //                outputStream.putFrame(output);
 //            }
 //        }).start();
+	
+		camera = CameraServer.getInstance().startAutomaticCapture(0);
 		
-//		camera = CameraServer.getInstance().startAutomaticCapture();
+		//sock = new Socket();
+		//Thread thr = new Thread(new CommsThread());
+		//thr.start();
+		
 //		
 //		source = new Mat();
 //		CvSink input = CameraServer.getInstance().getVideo();
@@ -90,12 +111,17 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		//Will get the selected auto mode from a list
-		m_autonomousCommand = m_chooser.getSelected();
+		//m_autonomousCommand = m_chooser.getSelected();
 
 		// schedule the autonomous command (example)
-		if (m_autonomousCommand != null) {
-			m_autonomousCommand.start();
-		}
+		//if (m_autonomousCommand != null) {
+		//	m_autonomousCommand.start();
+		//}
+		
+		//Command autonomous = new Auton();
+		
+		//autonomous.start();
+	
 	}
 
 	@Override
@@ -110,16 +136,63 @@ public class Robot extends TimedRobot {
 		}
 	}
 
+	private boolean keepRunning = true;
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		
-		SmartDashboard.putNumber("Throttle", OI.stick.getThrottle());
+
+		if(OI.stick.getRawButton(2)) DriveTrain.driveTrain.arcadeDrive(-stick.getY()*.8, stick.getTwist());
+		else DriveTrain.driveTrain.arcadeDrive(-stick.getY()*.95, stick.getTwist()*.67);
 		
-		SmartDashboard.putNumber("Encoder0 Distance: ", Encoders.enc0.getDistance());
-		SmartDashboard.putNumber("Encoder1 Distance: ", Encoders.enc1.getDistance());
-		//grip.process(source);
+		Thread th = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				keepRunning = false;
+				try {
+					ThorsHammer.thorsHammer.set(OI.stick.getX()*.5);
+				} catch(Exception e) {
+					System.out.println("Thor's hammer didn't thor: "+e.getMessage());
+					return;
+				}
+				keepRunning = true;
+				
+				
+			}
+			
+		});
+		if(keepRunning) th.start();
 		
+		int pov = OI.stick.getPOV();
+		
+		
+		Thread th2 = new Thread(new Runnable() {
+			
+			public void run() {
+				if(OI.stick.getTrigger()) Pneumatics.releaseBox();
+				else Pneumatics.clampBox();
+			}
+		});
+		th2.start();
+		
+		Thread th3 = new Thread(new Runnable() {
+			public void run() {
+				if(OI.stick.getThrottle() == 1) {
+					Flywheels.flyRight.set(1);
+					Flywheels.flyLeft.set(-1);
+				}
+				else if(OI.stick.getThrottle() == -1) {
+					Flywheels.flyLeft.set(1);
+					Flywheels.flyRight.set(-1);
+				}
+				else {
+					Flywheels.flyLeft.set(0);
+					Flywheels.flyRight.set(0);
+				}
+			}
+		});
+		th3.start();
 	}
 
 	@Override
