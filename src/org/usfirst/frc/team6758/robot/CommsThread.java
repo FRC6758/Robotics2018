@@ -7,12 +7,12 @@ import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
-import org.opencv.core.MatOfPoint;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
-import org.opencv.imgproc.Imgproc;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import me.devjoe.frc.team6758.vision.gson.AbstractPacket;
@@ -83,7 +83,27 @@ public class CommsThread implements Runnable {
 			send("ident", new Ident());
 			break;
 		case "visrep":
-			System.out.println("Reported");
+			JsonArray points = d.get("points").getAsJsonArray();
+			ArrayList<Double[]> pts = new ArrayList<Double[]>();
+			for(JsonElement e : points) {
+				JsonArray point = e.getAsJsonArray();
+				Double pt1 = point.get(0).getAsDouble();
+				Double pt2 = point.get(1).getAsDouble();
+				pts.add(new Double[] {pt1, pt2});
+			}
+			ArrayList<VisObj> objs = new ArrayList<VisObj>();
+			JsonArray ob = d.get("objects").getAsJsonArray();
+			for(JsonElement e : ob) {
+				VisObj o = new VisObj();
+				JsonObject obj = e.getAsJsonObject();
+				o.height = obj.get("height").getAsInt();
+				o.width = obj.get("width").getAsInt();
+				o.x = obj.get("x").getAsInt();
+				o.y = obj.get("y").getAsInt();
+				objs.add(o);
+			}
+			dataIn(pts.toArray(new Double[][] {}), objs.toArray(new VisObj[] {}));
+			break;
 		}
 	}
 	

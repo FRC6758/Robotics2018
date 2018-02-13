@@ -4,7 +4,7 @@ public class VisRep extends AbstractPacket{
 	public Double[][] points;
     public VisObj[] objects;
 
-    public class VisObj
+    public static class VisObj
     {
         public int width;
         public int height;
