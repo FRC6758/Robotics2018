@@ -7,11 +7,11 @@
 
 package org.usfirst.frc.team6758.robot;
 
-import java.io.IOException;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 import org.opencv.core.Mat;
+import org.opencv.core.Point;
+import org.opencv.core.Rect;
 import org.usfirst.frc.team6758.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team6758.robot.subsystems.Flywheels;
 import org.usfirst.frc.team6758.robot.subsystems.Pneumatics;
@@ -82,7 +82,7 @@ public class Robot extends TimedRobot {
 		camera = CameraServer.getInstance().startAutomaticCapture(0);
 		
 		sock = new Socket();
-		Thread thr = new Thread(new CommsThread());
+		Thread thr = new Thread(new CommsThread(this));
 		thr.start();
 		
 //		
@@ -134,6 +134,10 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
+	}
+	
+	public void autonData(Point[] pts, Rect[] rts) {
+		// TODO: Do something with the data
 	}
 
 	private boolean keepRunning = true;

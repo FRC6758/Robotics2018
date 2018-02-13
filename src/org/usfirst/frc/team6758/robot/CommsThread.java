@@ -18,9 +18,8 @@ import com.google.gson.JsonObject;
 import me.devjoe.frc.team6758.vision.gson.AbstractPacket;
 import me.devjoe.frc.team6758.vision.gson.DataPacket;
 import me.devjoe.frc.team6758.vision.gson.Ident;
-import me.devjoe.frc.team6758.vision.gson.Identified;
-import me.devjoe.frc.team6758.vision.gson.SwProto;
 import me.devjoe.frc.team6758.vision.gson.VisRep;
+import me.devjoe.frc.team6758.vision.gson.VisRep.VisObj;
 
 public class CommsThread implements Runnable {
 	
@@ -29,8 +28,9 @@ public class CommsThread implements Runnable {
 	private StringBuilder builder = new StringBuilder();
 	private boolean jetsonProto = false;
 	private boolean run = false;
+	public Robot spawner;
 
-	public CommsThread() {
+	public CommsThread(Robot spawner) {
 		try {
 			Robot.sock.connect(new InetSocketAddress("10.67.58.12", 8703));
 		} catch (IOException e1) {
@@ -44,6 +44,7 @@ public class CommsThread implements Runnable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		this.spawner = spawner;
 		run = true;
 	}
 	
@@ -101,31 +102,24 @@ public class CommsThread implements Runnable {
 		System.out.println(bytes.length);
 	}
 	
-	public void transmitResults(MatOfPoint[] m) {
-		if(!jetsonProto) {
-			System.out.println("Not in protocol");
-			return;
+	public void dataIn(Double[][] points, VisObj[] objects) {
+		ArrayList<Point> pts = new ArrayList<Point>();
+		for(Double[] p : points) {
+			Point po = new Point();
+			po.x = p[0];
+			po.y = p[1];
+			pts.add(po);
 		}
-		ArrayList<Double[]> points = new ArrayList<Double[]>();
-		ArrayList<VisRep.VisObj> objects = new ArrayList<VisRep.VisObj>();
-		VisRep rep = new VisRep();
-		for(MatOfPoint p : m) {
-			Point[] pts = p.toArray();
-			for(Point pt : pts) {
-				points.add(new Double[] {pt.x, pt.y});
-			}
-			Rect object = Imgproc.boundingRect(p);
-			VisRep.VisObj obj = rep.new VisObj();
-			obj.height = object.height;
-			obj.width = object.width;
-			obj.x = object.x;
-			obj.y = object.y;
-			objects.add(obj);
+		ArrayList<Rect> rts = new ArrayList<Rect>();
+		for(VisObj o : objects) {
+			Rect r = new Rect();
+			r.height = o.height;
+			r.width = o.width;
+			r.x = o.x;
+			r.y = o.y;
+			rts.add(r);
 		}
-		if(points.size() != 0 || objects.size() != 0) System.out.println(points.size()+" // "+objects.size());
-		rep.objects = objects.toArray(new VisRep.VisObj[] {});
-		rep.points = points.toArray(new Double[][] {});
-		if(points.size() != 0 || objects.size() != 0) send("visrep", rep);
+		spawner.autonData(pts.toArray(new Point[] {}), rts.toArray(new Rect[] {}));
 	}
 
 }
