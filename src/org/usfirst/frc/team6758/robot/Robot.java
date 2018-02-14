@@ -12,6 +12,9 @@ import java.net.Socket;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
+import org.usfirst.frc.team6758.robot.commands.AutoDriveLeft;
+import org.usfirst.frc.team6758.robot.commands.Auton;
+import org.usfirst.frc.team6758.robot.commands.AutonDrive;
 import org.usfirst.frc.team6758.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team6758.robot.subsystems.Flywheels;
 import org.usfirst.frc.team6758.robot.subsystems.Pneumatics;
@@ -20,6 +23,7 @@ import org.usfirst.frc.team6758.robot.subsystems.ThorsHammer;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -47,18 +51,20 @@ public class Robot extends TimedRobot {
 	public GripPipeline grip;
 	
 	public static Compressor compressor = new Compressor(0);
-
-	public static Encoder enc0 = new Encoder(0, 1);
-	public static Encoder enc1 = new Encoder(2, 3, false, Encoder.EncodingType.k4X);
+	
+	public static Encoder enc0;
 	
 	public static Socket sock;
 	
 	@Override
 	public void robotInit() {
 		m_oi = new OI();
-		//m_chooser.addDefault("Default Auto", new ExampleCommand());
-		// chooser.addObject("My Auto", new MyAutoCommand());
+		m_chooser.addDefault("Auto Drive Left", new AutoDriveLeft());
+		m_chooser.addObject("Auton", new Auton());
+		m_chooser.addObject("AutonDrive", new AutonDrive());
 		SmartDashboard.putData("Auto mode", m_chooser);
+		
+		enc0 = new Encoder(0, 1, false, EncodingType.k4X);
 		
 		//grip = new GripPipeline();
 		
@@ -111,16 +117,16 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		//Will get the selected auto mode from a list
-		//m_autonomousCommand = m_chooser.getSelected();
+		m_autonomousCommand = m_chooser.getSelected();
 
 		// schedule the autonomous command (example)
-		//if (m_autonomousCommand != null) {
-		//	m_autonomousCommand.start();
-		//}
+		if (m_autonomousCommand != null) {
+			m_autonomousCommand.start();
+		}
 		
-		//Command autonomous = new Auton();
-		
-		//autonomous.start();
+//		Command autonomous = new Auton();
+//		
+//		autonomous.start();
 	
 	}
 
@@ -155,7 +161,7 @@ public class Robot extends TimedRobot {
 			public void run() {
 				keepRunning = false;
 				try {
-					ThorsHammer.thorsHammer.set(OI.stick.getX()*.5);
+					//ThorsHammer.thorsHammer.set(OI.stick.getX()*.5);
 				} catch(Exception e) {
 					System.out.println("Thor's hammer didn't thor: "+e.getMessage());
 					return;

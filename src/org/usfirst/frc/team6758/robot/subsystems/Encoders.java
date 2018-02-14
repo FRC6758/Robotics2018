@@ -7,12 +7,17 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Encoders extends Subsystem {
 	
-	public static Encoder enc0 = new Encoder(RobotMap.enc0APort, RobotMap.enc0BPort, false, Encoder.EncodingType.k4X);
-	public static Encoder enc1 = new Encoder(RobotMap.enc1APort, RobotMap.enc1BPort, false, Encoder.EncodingType.k4X);
+	//public static Encoder enc0 = new Encoder(RobotMap.enc0APort, RobotMap.enc0BPort, false, Encoder.EncodingType.k4X);
+	//public static Encoder enc1 = new Encoder(RobotMap.enc1APort, RobotMap.enc1BPort, false, Encoder.EncodingType.k4X);
 	
     public void initDefaultCommand() {
     	
     }
+
+	public static void getRaw() {
+		// TODO Auto-generated method stub
+		//return enc0.getRaw();
+	}
     
 }
 
