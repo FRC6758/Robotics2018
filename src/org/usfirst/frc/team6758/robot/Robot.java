@@ -56,10 +56,12 @@ public class Robot extends TimedRobot {
 	
 	public static Socket sock;
 	
+	protected int pov;
+	
 	@Override
 	public void robotInit() {
 		m_oi = new OI();
-		m_chooser.addDefault("Auto Drive Left", new AutoDriveLeft());
+		m_chooser.addDefault("DEFAULT FORWARD", new AutoDriveLeft());
 		m_chooser.addObject("Auton", new Auton());
 		m_chooser.addObject("AutonDrive", new AutonDrive());
 		SmartDashboard.putData("Auto mode", m_chooser);
@@ -155,28 +157,6 @@ public class Robot extends TimedRobot {
 		if(OI.stick.getRawButton(2)) DriveTrain.driveTrain.arcadeDrive(-stick.getY()*.8, stick.getTwist());
 		else DriveTrain.driveTrain.arcadeDrive(-stick.getY()*.95, stick.getTwist()*.67);
 		
-		Thread th = new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				keepRunning = false;
-				try {
-					//ThorsHammer.thorsHammer.set(OI.stick.getX()*.5);
-				} catch(Exception e) {
-					System.out.println("Thor's hammer didn't thor: "+e.getMessage());
-					return;
-				}
-				keepRunning = true;
-				
-				
-			}
-			
-		});
-		if(keepRunning) th.start();
-		
-		int pov = OI.stick.getPOV();
-		
-		
 		Thread th2 = new Thread(new Runnable() {
 			
 			public void run() {
@@ -186,23 +166,21 @@ public class Robot extends TimedRobot {
 		});
 		th2.start();
 		
-		Thread th3 = new Thread(new Runnable() {
-			public void run() {
-				if(OI.stick.getThrottle() == 1) {
-					Flywheels.flyRight.set(1);
-					Flywheels.flyLeft.set(-1);
-				}
-				else if(OI.stick.getThrottle() == -1) {
-					Flywheels.flyLeft.set(1);
-					Flywheels.flyRight.set(-1);
-				}
-				else {
-					Flywheels.flyLeft.set(0);
-					Flywheels.flyRight.set(0);
-				}
-			}
-		});
-		th3.start();
+		//POV CONTROLS
+		pov = OI.stick.getPOV(0);
+				
+		if(pov != 1) {
+					
+			//FlyWheels
+			if(pov > 355 || pov < 5) Flywheels.forward();
+			else if(pov > 175 && pov < 185) Flywheels.backward();
+			else Flywheels.off();
+				
+			//Thors Hammer
+			if(pov > 85 && pov < 95) ThorsHammer.thorsHammer.set(.35);
+			else if(pov > 265 && pov < 275);
+			else ThorsHammer.thorsHammer.set(0);
+		}
 	}
 
 	@Override
