@@ -1,8 +1,6 @@
-package org.usfirst.frc.team6758.robot.commands;
+package org.usfirst.frc.team6758.robot.autonomous;
 
 import org.usfirst.frc.team6758.robot.subsystems.DriveTrain;
-import org.usfirst.frc.team6758.robot.subsystems.Encoders;
-
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -26,11 +24,9 @@ public class AutonDrive extends Command {
     	//enc0Distance = enc0.getRaw();
     	
     	new Auton().start();
-    	if() {
-    		new AutoDriveLeft().start();
-    		System.out.println("DONE! AUTONDRIVE!");
-        	flag = true;
-    	}
+    	new AutoDriveLeft().start();
+    	System.out.println("DONE! AUTONDRIVE!");
+        flag = true;
     }
 
     // Make this return true when this Command no longer needs to run execute()

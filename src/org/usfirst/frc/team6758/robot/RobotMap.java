@@ -7,17 +7,22 @@
 
 package org.usfirst.frc.team6758.robot;
 
-import edu.wpi.first.wpilibj.DigitalInput;
-
 public class RobotMap {
-	//DIO
-	public static int enc0APort = 0, enc0BPort = 1,
-			enc1APort = 2, enc1BPort = 3;
+	//Encoders
+	public static final int 
+		encLPortA = 0, encLPortB = 1,
+		encRPortA = 2, encRPortB = 3,
+		encThorPortA = 4, encThorPortB = 5;
 	
 	//PCM
-	public static int grabberPort1 = 0, grabberPort2 = 1;
+	public static final int solenoidPortA = 0,
+							solenoidPortB = 1;
 	
-	//Limit Switch
-	public static DigitalInput limitSwitch0, limitSwitch180;
+	//Motor Controllers
+	public static final int
+		mDJ = 0, mKeegan = 1,
+		mApache = 2, mAndo = 3,
+		mDeter = 4, mTrevor = 5,
+		mKristina = 6, mDane = 7;
 	
 }

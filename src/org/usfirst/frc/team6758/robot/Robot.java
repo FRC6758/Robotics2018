@@ -12,9 +12,9 @@ import java.net.Socket;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
-import org.usfirst.frc.team6758.robot.commands.AutoDriveLeft;
-import org.usfirst.frc.team6758.robot.commands.Auton;
-import org.usfirst.frc.team6758.robot.commands.AutonDrive;
+import org.usfirst.frc.team6758.robot.autonomous.AutoDriveLeft;
+import org.usfirst.frc.team6758.robot.autonomous.Auton;
+import org.usfirst.frc.team6758.robot.autonomous.AutonDrive;
 import org.usfirst.frc.team6758.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team6758.robot.subsystems.Flywheels;
 import org.usfirst.frc.team6758.robot.subsystems.Pneumatics;
@@ -36,11 +36,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends TimedRobot {
 	public static OI m_oi;
-	
-	private boolean toggle = true;
-
-	public static MecanumDrive driveTrain;
-	
 	public static Joystick stick = new Joystick(0);
 	
 	Command m_autonomousCommand;
@@ -52,11 +47,11 @@ public class Robot extends TimedRobot {
 	
 	public static Compressor compressor = new Compressor(0);
 	
-	public static Encoder enc0;
-	
 	public static Socket sock;
 	
-	protected int pov;
+	private int pov;
+	
+	public static final DriveTrain driveTrain = new DriveTrain();
 	
 	@Override
 	public void robotInit() {
@@ -65,39 +60,12 @@ public class Robot extends TimedRobot {
 		m_chooser.addObject("Auton", new Auton());
 		m_chooser.addObject("AutonDrive", new AutonDrive());
 		SmartDashboard.putData("Auto mode", m_chooser);
-		
-		enc0 = new Encoder(0, 1, false, EncodingType.k4X);
-		
-		//grip = new GripPipeline();
-		
-//		new Thread(() -> {
-//            UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-//            camera.setResolution(640, 480);
-//            
-//            CvSink cvSink = CameraServer.getInstance().getVideo();
-//            CvSource outputStream = CameraServer.getInstance().putVideo("Blur", 640, 480);
-//            
-//            source = new Mat();
-//            output = new Mat();
-//            
-//            while(!Thread.interrupted()) {
-//                cvSink.grabFrame(source);
-//                //Imgproc.cvtColor(source, output, Imgproc.COLOR_BayerRG2BGR);
-//                outputStream.putFrame(output);
-//            }
-//        }).start();
 	
 		camera = CameraServer.getInstance().startAutomaticCapture(0);
 		
-		sock = new Socket();
-		Thread thr = new Thread(new CommsThread(this));
-		thr.start();
-		
-//		
-//		source = new Mat();
-//		CvSink input = CameraServer.getInstance().getVideo();
-//    	
-//    	input.grabFrame(source);
+		//sock = new Socket();
+		//Thread thr = new Thread(new CommsThread(this));
+		//thr.start();
     	
 	}
 	
@@ -148,7 +116,6 @@ public class Robot extends TimedRobot {
 		// TODO: Do something with the data
 	}
 
-	private boolean keepRunning = true;
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
@@ -166,21 +133,26 @@ public class Robot extends TimedRobot {
 		});
 		th2.start();
 		
-		//POV CONTROLS
-		pov = OI.stick.getPOV(0);
-				
-		if(pov != 1) {
-					
-			//FlyWheels
-			if(pov > 355 || pov < 5) Flywheels.forward();
-			else if(pov > 175 && pov < 185) Flywheels.backward();
-			else Flywheels.off();
-				
-			//Thors Hammer
-			if(pov > 85 && pov < 95) ThorsHammer.thorsHammer.set(.35);
-			else if(pov > 265 && pov < 275);
-			else ThorsHammer.thorsHammer.set(0);
-		}
+		Thread th3 = new Thread(new Runnable() {
+			public void run() {
+				//POV CONTROLS
+				pov = OI.stick.getPOV(0);
+						
+				if(pov != 1) {
+							
+					//FlyWheels
+					if(pov > 355 || pov < 5) Flywheels.toss();
+					else if(pov > 175 && pov < 185) Flywheels.grab();
+					else Flywheels.off();
+						
+					//Thors Hammer
+					if(pov > 85 && pov < 95) ThorsHammer.thorsHammer.set(.35);
+					else if(pov > 265 && pov < 275);
+					else ThorsHammer.thorsHammer.set(0);
+				}
+			}
+		});
+		th3.start();
 	}
 
 	@Override
