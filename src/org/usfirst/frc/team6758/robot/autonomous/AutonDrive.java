@@ -24,9 +24,17 @@ public class AutonDrive extends Command {
     	//enc0Distance = enc0.getRaw();
     	
     	new Auton().start();
+<<<<<<< HEAD:src/org/usfirst/frc/team6758/robot/autonomous/AutonDrive.java
     	new AutoDriveLeft().start();
     	System.out.println("DONE! AUTONDRIVE!");
         flag = true;
+=======
+    	if(true) {
+    		new AutoDriveLeft().start();
+    		System.out.println("DONE! AUTONDRIVE!");
+        	flag = true;
+    	}
+>>>>>>> 4f1008bdfa50e38c526f936a79051ecb4d0c5fda:src/org/usfirst/frc/team6758/robot/commands/AutonDrive.java
     }
 
     // Make this return true when this Command no longer needs to run execute()
