@@ -1,6 +1,7 @@
 package org.usfirst.frc.team6758.robot.autonomous;
 
 import org.usfirst.frc.team6758.robot.Robot;
+import org.usfirst.frc.team6758.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -21,14 +22,14 @@ public class ThorHoldAuton extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(Robot.thorsHammer.encThor.getRaw() < -460) {
-    		Robot.thorsHammer.thorsHammer.set(-.3);
+    	if(Robot.thorsHammer.encThor.getRaw() < -480) {
+    		Robot.thorsHammer.thorsHammer.set(-RobotMap.thorSpeed);
     	}
-    	else if(Robot.thorsHammer.encThor.getRaw() > -390) {
-    		Robot.thorsHammer.thorsHammer.set(.1);
+    	else if(Robot.thorsHammer.encThor.getRaw() > -330) {
+    		Robot.thorsHammer.thorsHammer.set(RobotMap.thorSpeed*.3);
     	}
     	else {
-    		Robot.thorsHammer.thorsHammer.set(0);
+    		Robot.thorsHammer.off();
     	}
     }
 

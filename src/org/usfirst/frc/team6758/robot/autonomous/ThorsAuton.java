@@ -24,8 +24,8 @@ public class ThorsAuton extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(Robot.thorsHammer.encThor.getRaw() < -200) {
-    		Robot.thorsHammer.thorsHammer.set(-RobotMap.thorSpeed);
+    	if(Robot.thorsHammer.encThor.getRaw() < RobotMap.thorUpThresh) {
+    		Robot.thorsHammer.moveUp(RobotMap.thorSpeed);
     	}
     	else {
     		Robot.thorsHammer.thorsHammer.set(0);

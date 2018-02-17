@@ -1,9 +1,7 @@
 package org.usfirst.frc.team6758.robot.autonomous;
 
 import org.usfirst.frc.team6758.robot.Robot;
-import org.usfirst.frc.team6758.robot.subsystems.DriveTrain;
-
-import edu.wpi.first.wpilibj.Encoder;
+import org.usfirst.frc.team6758.robot.RobotMap;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -28,7 +26,7 @@ public class Auton extends Command {
     	System.out.println(Robot.driveTrain.encLeft.getRaw());
     	
     	if(Robot.driveTrain.encLeft.getRaw() < 39500) {
-    	Robot.driveTrain.driveForward(.45);
+    	Robot.driveTrain.driveForward(RobotMap.defaultAutonSpeed);
     	}
     	else {
     		flag = true;

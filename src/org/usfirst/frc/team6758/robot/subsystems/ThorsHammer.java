@@ -21,5 +21,19 @@ public class ThorsHammer extends Subsystem {
     public void initDefaultCommand() {
         //setDefaultCommand(new Hammer());
     }
+    
+    public void moveUp(double speed) {
+    	if(speed > .45) speed = 3;
+    	thorsHammer.set(speed);
+    }
+    
+    public void moveDown(double speed) {
+    	if(speed > .3) speed = .2;
+    	thorsHammer.set(-speed);
+    }
+    
+    public void off() {
+    	thorsHammer.set(0);
+    }
 }
 

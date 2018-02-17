@@ -16,5 +16,8 @@ public class OI {
 	public static Joystick stick = new Joystick(0);
 	
 	public OI() {
+		
+		//Where are theeee buttons????
+		
 	}
 }

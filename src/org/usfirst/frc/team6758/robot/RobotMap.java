@@ -35,4 +35,15 @@ public class RobotMap {
 	 */
 	public static final double flywheelSpeed = 1; 
 	public static final double thorSpeed = .3;
+	public static final double defaultAutonSpeed = .4;
+	
+	
+	/*
+	 * Thors Hammer Encoder
+	 * 
+	 * 0 to the encoder is all the way up (90 degrees)
+	 * 
+	 * ~ -900 is were the arm stops moving on the downward angle
+	 */
+	public static final double thorUpThresh = -200;
 }

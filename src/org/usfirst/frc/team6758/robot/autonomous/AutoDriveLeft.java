@@ -1,9 +1,7 @@
 package org.usfirst.frc.team6758.robot.autonomous;
 
 import org.usfirst.frc.team6758.robot.Robot;
-import org.usfirst.frc.team6758.robot.subsystems.DriveTrain;
-
-import edu.wpi.first.wpilibj.Encoder;
+import org.usfirst.frc.team6758.robot.RobotMap;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -27,12 +25,10 @@ public class AutoDriveLeft extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if(Robot.driveTrain.encLeft.getRaw() < 8000) {
-    		DriveTrain.left.set(.4);
-    		DriveTrain.right.set(.4);
+    		Robot.driveTrain.turnClockwise(RobotMap.defaultAutonSpeed*.8);
     	}
     	else {
-    		DriveTrain.left.set(0);
-    		DriveTrain.right.set(0);
+    		Robot.driveTrain.stop();
     		flag = true;
     	}
     }

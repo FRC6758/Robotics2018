@@ -1,7 +1,7 @@
 package org.usfirst.frc.team6758.robot.autonomous;
 
-import org.usfirst.frc.team6758.robot.subsystems.DriveTrain;
-
+import org.usfirst.frc.team6758.robot.Robot;
+import org.usfirst.frc.team6758.robot.RobotMap;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
@@ -13,7 +13,7 @@ public class DriveForward extends Command {
 	
     public DriveForward(double time) {
         // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
+        requires(Robot.driveTrain);
     	this.time = time;
     }
 
@@ -24,7 +24,7 @@ public class DriveForward extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	//DriveTrain.driveTrain.arcadeDrive(.2, 0);
+    	Robot.driveTrain.driveForward(RobotMap.defaultAutonSpeed);
     	
     }
 
@@ -35,6 +35,7 @@ public class DriveForward extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.driveTrain.stop();
     }
 
     // Called when another command which requires one or more of the same
