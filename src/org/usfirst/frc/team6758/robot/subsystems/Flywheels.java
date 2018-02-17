@@ -25,12 +25,12 @@ public class Flywheels extends Subsystem {
     	flyRight.set(0);
     }
     public static void toss() {
-    	flyLeft.set(1);
-    	flyRight.set(-1);
+    	flyLeft.set(RobotMap.flywheelSpeed);
+    	flyRight.set(-RobotMap.flywheelSpeed);
     }
     public static void grab() {
-    	flyLeft.set(1);
-    	flyRight.set(-1);
+    	flyLeft.set(-RobotMap.flywheelSpeed);
+    	flyRight.set(RobotMap.flywheelSpeed);
     }
 }
 

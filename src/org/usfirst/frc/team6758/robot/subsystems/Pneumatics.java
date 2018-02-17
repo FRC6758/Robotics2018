@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Pneumatics extends Subsystem {
 
-	public static DoubleSolenoid grabber = new DoubleSolenoid(RobotMap.solenoidPortA, RobotMap.solenoidPortB);
+	private static DoubleSolenoid grabber = new DoubleSolenoid(RobotMap.solenoidPortA, RobotMap.solenoidPortB);
 	
     public void initDefaultCommand() {
         

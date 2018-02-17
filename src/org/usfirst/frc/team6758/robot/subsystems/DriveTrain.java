@@ -42,6 +42,14 @@ public class DriveTrain extends Subsystem {
 		driveTrain.arcadeDrive(-speed, 0);
 	}
 	
+	public void turnClockwise(double speed) {
+		driveTrain.arcadeDrive(0, speed);
+	}
+	
+	public void turnCounterClockwise(double speed) {
+		driveTrain.arcadeDrive(0, -speed);
+	}
+	
 	public void stop() {
 		driveTrain.arcadeDrive(0, 0);
 	}

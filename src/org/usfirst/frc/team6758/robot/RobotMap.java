@@ -24,5 +24,15 @@ public class RobotMap {
 		mApache = 2, mAndo = 3,
 		mDeter = 4, mTrevor = 5,
 		mKristina = 6, mDane = 7;
-	
+
+	/*
+	 * SPEED CONTROLS
+	 * 
+	 * Using this to control speeds for auton and teleop speeds
+	 * that are fixed to reduce the amount of places they may be.
+	 * 
+	 * All speeds are on a scale of 0-1
+	 */
+	public static final double flywheelSpeed = 1; 
+	public static final double thorSpeed = .3;
 }

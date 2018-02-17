@@ -15,6 +15,8 @@ import org.opencv.core.Rect;
 import org.usfirst.frc.team6758.robot.autonomous.AutoDriveLeft;
 import org.usfirst.frc.team6758.robot.autonomous.Auton;
 import org.usfirst.frc.team6758.robot.autonomous.AutonDrive;
+import org.usfirst.frc.team6758.robot.autonomous.ThorHoldAuton;
+import org.usfirst.frc.team6758.robot.autonomous.ThorsAuton;
 import org.usfirst.frc.team6758.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team6758.robot.subsystems.Flywheels;
 import org.usfirst.frc.team6758.robot.subsystems.Pneumatics;
@@ -52,6 +54,9 @@ public class Robot extends TimedRobot {
 	private int pov;
 	
 	public static final DriveTrain driveTrain = new DriveTrain();
+	public static final ThorsHammer thorsHammer = new ThorsHammer();
+	public static final Pneumatics pneumatics = new Pneumatics();
+	public static final Flywheels flywheels = new Flywheels();
 	
 	@Override
 	public void robotInit() {
@@ -59,9 +64,13 @@ public class Robot extends TimedRobot {
 		m_chooser.addDefault("DEFAULT FORWARD", new AutoDriveLeft());
 		m_chooser.addObject("Auton", new Auton());
 		m_chooser.addObject("AutonDrive", new AutonDrive());
+		m_chooser.addObject("Thors Auton", new ThorsAuton());
+		m_chooser.addObject("Thor Hold Auton", new ThorHoldAuton());
 		SmartDashboard.putData("Auto mode", m_chooser);
 	
 		camera = CameraServer.getInstance().startAutomaticCapture(0);
+		camera.setResolution(352,  240);
+		camera.setFPS(30);
 		
 		//sock = new Socket();
 		//Thread thr = new Thread(new CommsThread(this));
@@ -76,7 +85,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void disabledInit() {
-
+			Pneumatics.off();
 	}
 
 	@Override
@@ -92,12 +101,7 @@ public class Robot extends TimedRobot {
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();
-		}
-		
-//		Command autonomous = new Auton();
-//		
-//		autonomous.start();
-	
+		}	
 	}
 
 	@Override
@@ -120,6 +124,7 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		
+		if(OI.stick.getRawButton(11)) new ThorHoldAuton();
 
 		if(OI.stick.getRawButton(2)) DriveTrain.driveTrain.arcadeDrive(-stick.getY()*.8, stick.getTwist());
 		else DriveTrain.driveTrain.arcadeDrive(-stick.getY()*.95, stick.getTwist()*.67);
@@ -146,9 +151,9 @@ public class Robot extends TimedRobot {
 					else Flywheels.off();
 						
 					//Thors Hammer
-					if(pov > 85 && pov < 95) ThorsHammer.thorsHammer.set(.35);
+					if(pov > 85 && pov < 95) thorsHammer.thorsHammer.set(.35);
 					else if(pov > 265 && pov < 275);
-					else ThorsHammer.thorsHammer.set(0);
+					else thorsHammer.thorsHammer.set(0);
 				}
 			}
 		});
