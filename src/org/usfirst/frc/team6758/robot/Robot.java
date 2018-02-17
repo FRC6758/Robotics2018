@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -37,6 +38,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class Robot extends TimedRobot {
+	double controllerPOV;
+	
 	public static OI m_oi;
 	public static Joystick stick = new Joystick(0);
 	
@@ -57,6 +60,7 @@ public class Robot extends TimedRobot {
 	public static final ThorsHammer thorsHammer = new ThorsHammer();
 	public static final Pneumatics pneumatics = new Pneumatics();
 	public static final Flywheels flywheels = new Flywheels();
+	public static final OI oi = new OI();
 	
 	@Override
 	public void robotInit() {
@@ -124,36 +128,40 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		
-		if(OI.stick.getRawButton(11)) new ThorHoldAuton();
-
+		if(OI.controller.getAButtonPressed()) {
+			System.out.println("A Button Pressed");
+		}
+		
+		if(OI.controller.getBumper(GenericHID.Hand.kRight)) flywheels.grab();
+		else if(OI.controller.getTriggerAxis(GenericHID.Hand.kRight) > .9) flywheels.toss();
+		else flywheels.off();
+		
+		if(OI.controller.getTriggerAxis(GenericHID.Hand.kLeft) > .9) pneumatics.clampBox();
+		
+		pov = OI.controller.getPOV();
+		
 		if(OI.stick.getRawButton(2)) DriveTrain.driveTrain.arcadeDrive(-stick.getY()*.8, stick.getTwist());
 		else DriveTrain.driveTrain.arcadeDrive(-stick.getY()*.95, stick.getTwist()*.67);
 		
-		Thread th2 = new Thread(new Runnable() {
-			
-			public void run() {
-				if(OI.stick.getTrigger()) Pneumatics.releaseBox();
-				else Pneumatics.clampBox();
-			}
-		});
-		th2.start();
+				if(OI.stick.getTrigger() || OI.controller.getTriggerAxis(GenericHID.Hand.kLeft) > .9) pneumatics.releaseBox();
+				else pneumatics.clampBox();
 		
 		Thread th3 = new Thread(new Runnable() {
 			public void run() {
 				//POV CONTROLS
-				pov = OI.stick.getPOV(0);
+				if(pov == -1) {
+					pov = OI.stick.getPOV(0);
+				}
 						
-				if(pov != 1) {
-							
-					//FlyWheels
-					if(pov > 355 || pov < 5) Flywheels.toss();
-					else if(pov > 175 && pov < 185) Flywheels.grab();
-					else Flywheels.off();
-						
+				if(pov != -1) {
 					//Thors Hammer
-					if(pov > 85 && pov < 95) thorsHammer.thorsHammer.set(.35);
-					else if(pov > 265 && pov < 275);
-					else thorsHammer.thorsHammer.set(0);
+					if(pov > 85 && pov < 95) thorsHammer.moveUp(RobotMap.thorSpeed);
+					else if(pov > 355 || pov < 5) flywheels.toss();
+					else if(pov > 265 && pov < 275) thorsHammer.moveDown(RobotMap.thorSpeed);
+					else if(pov > 175 && pov < 185) flywheels.grab();
+				}
+				else {
+					thorsHammer.off();
 				}
 			}
 		});

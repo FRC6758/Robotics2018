@@ -13,10 +13,10 @@ public class Pneumatics extends Subsystem {
         
     }
     
-    public static void clampBox() {
+    public void clampBox() {
     	grabber.set(DoubleSolenoid.Value.kForward);
     }
-    public static void releaseBox() {
+    public void releaseBox() {
     	grabber.set(DoubleSolenoid.Value.kReverse);
     }
     public static void off() {

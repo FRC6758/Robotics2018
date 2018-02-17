@@ -13,22 +13,22 @@ public class Flywheels extends Subsystem {
 
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-	public static WPI_TalonSRX flyLeft = new WPI_TalonSRX(RobotMap.mTrevor);
-	public static WPI_TalonSRX flyRight = new WPI_TalonSRX(RobotMap.mKristina);
+	public static WPI_TalonSRX flyLeft = new WPI_TalonSRX(RobotMap.mDeter);
+	public static WPI_TalonSRX flyRight = new WPI_TalonSRX(RobotMap.mTrevor);
 
     public void initDefaultCommand() {
         //setDefaultCommand();
     }
     
-    public static void off() {
+    public void off() {
     	flyLeft.set(0);
     	flyRight.set(0);
     }
-    public static void toss() {
+    public void toss() {
     	flyLeft.set(RobotMap.flywheelSpeed);
     	flyRight.set(-RobotMap.flywheelSpeed);
     }
-    public static void grab() {
+    public void grab() {
     	flyLeft.set(-RobotMap.flywheelSpeed);
     	flyRight.set(RobotMap.flywheelSpeed);
     }
