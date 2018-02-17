@@ -1,52 +1,49 @@
 package org.usfirst.frc.team6758.robot.commands;
 
-import org.usfirst.frc.team6758.robot.subsystems.DriveTrain;
-import org.usfirst.frc.team6758.robot.subsystems.Encoders;
+import org.usfirst.frc.team6758.robot.Robot;
 
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class AutonDrive extends Command {
-	
-	boolean flag;
-	
-    public AutonDrive() {
+public class ThorHoldAuton extends Command {
+
+    public ThorHoldAuton() {
         // Use requires() here to declare subsystem dependencies
+        //requires(Robot.thorsHammer);
     }
+
     // Called just before this Command runs the first time
     protected void initialize() {
-    	flag = false;
+    	setTimeout(10);
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	//enc0Distance = enc0.getRaw();
-    	
-    	new Auton().start();
-    	if(true) {
-    		new AutoDriveLeft().start();
-    		System.out.println("DONE! AUTONDRIVE!");
-        	flag = true;
+    	if(Robot.thorsHammer.encThor.getRaw() < -460) {
+    		Robot.thorsHammer.thorsHammer.set(-.3);
+    	}
+    	else if(Robot.thorsHammer.encThor.getRaw() > -390) {
+    		Robot.thorsHammer.thorsHammer.set(.1);
+    	}
+    	else {
+    		Robot.thorsHammer.thorsHammer.set(0);
     	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	//NEEDS VARIABLES
-    	return flag;
-    	
+        return isTimedOut();
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	new ThorsAuton();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	System.out.println("AutonDrive Interrupted!");
     }
 }

@@ -15,6 +15,8 @@ import org.opencv.core.Rect;
 import org.usfirst.frc.team6758.robot.commands.AutoDriveLeft;
 import org.usfirst.frc.team6758.robot.commands.Auton;
 import org.usfirst.frc.team6758.robot.commands.AutonDrive;
+import org.usfirst.frc.team6758.robot.commands.ThorHoldAuton;
+import org.usfirst.frc.team6758.robot.commands.ThorsAuton;
 import org.usfirst.frc.team6758.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team6758.robot.subsystems.Flywheels;
 import org.usfirst.frc.team6758.robot.subsystems.Pneumatics;
@@ -38,8 +40,8 @@ public class Robot extends TimedRobot {
 	public static OI m_oi;
 	
 	private boolean toggle = true;
-
-	public static MecanumDrive driveTrain;
+	
+	public static ThorsHammer thorsHammer = new ThorsHammer();
 	
 	public static Joystick stick = new Joystick(0);
 	
@@ -62,9 +64,11 @@ public class Robot extends TimedRobot {
 		m_chooser.addDefault("Auto Drive Left", new AutoDriveLeft());
 		m_chooser.addObject("Auton", new Auton());
 		m_chooser.addObject("AutonDrive", new AutonDrive());
+		m_chooser.addObject("Thors Hammer", new ThorsAuton());
+		m_chooser.addObject("Hold Thor", new ThorHoldAuton());
 		SmartDashboard.putData("Auto mode", m_chooser);
-		
 		enc0 = new Encoder(0, 1, false, EncodingType.k4X);
+		
 		
 		//grip = new GripPipeline();
 		
@@ -86,7 +90,7 @@ public class Robot extends TimedRobot {
 //        }).start();
 	
 		camera = CameraServer.getInstance().startAutomaticCapture(0);
-		
+		camera.setResolution(352, 240);
 		sock = new Socket();
 		Thread thr = new Thread(new CommsThread(this));
 		thr.start();
@@ -106,7 +110,7 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void disabledInit() {
-
+			Pneumatics.off();
 	}
 
 	@Override
@@ -155,13 +159,16 @@ public class Robot extends TimedRobot {
 		if(OI.stick.getRawButton(2)) DriveTrain.driveTrain.arcadeDrive(-stick.getY()*.8, stick.getTwist());
 		else DriveTrain.driveTrain.arcadeDrive(-stick.getY()*.95, stick.getTwist()*.67);
 		
+		if(OI.stick.getRawButton(11)) new ThorHoldAuton();
+		
 		Thread th = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
 				keepRunning = false;
 				try {
-					//ThorsHammer.thorsHammer.set(OI.stick.getX()*.5);
+					thorsHammer.thorsHammer.set(OI.stick.getX()*.5);
+					System.out.println(thorsHammer.encThor.getRaw());
 				} catch(Exception e) {
 					System.out.println("Thor's hammer didn't thor: "+e.getMessage());
 					return;

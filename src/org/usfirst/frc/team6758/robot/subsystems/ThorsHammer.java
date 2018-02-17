@@ -4,6 +4,7 @@ import org.usfirst.frc.team6758.robot.commands.Hammer;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -19,9 +20,8 @@ public class ThorsHammer extends Subsystem {
 	double angle = 0;
 	boolean active = false;
 	
-	public static WPI_TalonSRX thorsHammer = new WPI_TalonSRX(6);
-	public static DigitalInput limitSwitch0, limitSwitch180;
-	//public static Encoder thorsEnc = new Encoder(null, null);
+	public WPI_TalonSRX thorsHammer = new WPI_TalonSRX(6);
+	public Encoder encThor = new Encoder(4, 5, false, EncodingType.k4X);
 
     public void initDefaultCommand() {
         //setDefaultCommand(new Hammer());

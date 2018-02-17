@@ -1,6 +1,7 @@
 package org.usfirst.frc.team6758.robot.commands;
 
 import org.usfirst.frc.team6758.robot.OI;
+import org.usfirst.frc.team6758.robot.Robot;
 import org.usfirst.frc.team6758.robot.subsystems.ThorsHammer;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -21,7 +22,7 @@ public class Hammer extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	ThorsHammer.thorsHammer.set(OI.stick.getX());
+    	//Robot.thorsHammer.thorsHammer.set(OI.stick.getX());
     }
 
     // Make this return true when this Command no longer needs to run execute()
