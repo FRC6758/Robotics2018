@@ -1,52 +1,36 @@
-package org.usfirst.frc.team6758.robot.autonomous;
+package org.usfirst.frc.team6758.robot.commands;
 
 import org.usfirst.frc.team6758.robot.Robot;
-import org.usfirst.frc.team6758.robot.RobotMap;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class Auton extends Command {
-	
-	static boolean flag;
-	double encLeft, encRight, distance;
-	
-    public Auton() {
+public class ArmRelease extends Command {
+
+    public ArmRelease() {
         // Use requires() here to declare subsystem dependencies
-    	requires(Robot.driveTrain);
+        requires(Robot.pneumatics);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	flag = false;
     }
+
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	
-    	encLeft = Robot.driveTrain.encLeft.getRaw();
-    	encRight = Robot.driveTrain.encRight.getRaw();
-    	distance = (encLeft + encRight) / 2;
-    	
-    	System.out.println(distance);
-    	
-    	if(distance < 39500) {
-    	Robot.driveTrain.driveForward(RobotMap.defaultAutonSpeed);
-    	}
-    	else {
-    		flag = true;
-    		Robot.driveTrain.stop();
-    	}
+    	Robot.pneumatics.releaseBox();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return flag;
+        return true;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.driveTrain.resetDistance();
+    	
     }
 
     // Called when another command which requires one or more of the same

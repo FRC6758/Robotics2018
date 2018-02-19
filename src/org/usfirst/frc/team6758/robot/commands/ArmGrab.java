@@ -1,46 +1,35 @@
-package org.usfirst.frc.team6758.robot.autonomous;
+package org.usfirst.frc.team6758.robot.commands;
 
 import org.usfirst.frc.team6758.robot.Robot;
-import org.usfirst.frc.team6758.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class ThorsAuton extends Command {
+public class ArmGrab extends Command {
 
-	boolean flag;
-	
-    public ThorsAuton() {
+    public ArmGrab() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.thorsHammer);
+        requires(Robot.pneumatics);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	flag = false;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(Robot.thorsHammer.encThor.getRaw() < RobotMap.thorUpThresh) {
-    		Robot.thorsHammer.moveUp(RobotMap.thorSpeed);
-    	}
-    	else {
-    		Robot.thorsHammer.thorsHammer.set(0);
-    		flag = true;
-    	}
+    	Robot.pneumatics.clampBox();
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return flag;
+        return true;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.thorsHammer.thorsHammer.set(0);
     }
 
     // Called when another command which requires one or more of the same

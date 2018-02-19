@@ -13,6 +13,8 @@ public class RobotMap {
 		encLPortA = 0, encLPortB = 1,
 		encRPortA = 2, encRPortB = 3,
 		encThorPortA = 4, encThorPortB = 5;
+	public static final double
+		PPI = 67.4, PPD = 10;
 	
 	//PCM
 	public static final int solenoidPortA = 0,
@@ -33,8 +35,8 @@ public class RobotMap {
 	 * 
 	 * All speeds are on a scale of 0-1
 	 */
-	public static final double flywheelSpeed = 1; 
-	public static final double thorSpeed = .3;
+	public static final double elevatorSpeed = .9;
+	public static final double elevatorAutonSpeed = .4;
 	public static final double defaultAutonSpeed = .4;
 	
 	

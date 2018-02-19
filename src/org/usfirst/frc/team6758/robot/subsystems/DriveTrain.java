@@ -16,10 +16,10 @@ public class DriveTrain extends Subsystem {
 	public static WPI_TalonSRX frontRight = new WPI_TalonSRX(RobotMap.mApache);
 	public static WPI_TalonSRX rearRight = new WPI_TalonSRX(RobotMap.mAndo);
 	
-	public static SpeedControllerGroup left = new SpeedControllerGroup(frontLeft, rearLeft);
-	public static SpeedControllerGroup right = new SpeedControllerGroup(frontRight, rearRight);
+	public SpeedControllerGroup left = new SpeedControllerGroup(frontLeft, rearLeft);
+	public SpeedControllerGroup right = new SpeedControllerGroup(frontRight, rearRight);
 	
-	public static DifferentialDrive driveTrain = new DifferentialDrive(left, right); 
+	public DifferentialDrive driveTrain = new DifferentialDrive(left, right); 
 	
 	public Encoder encLeft = new Encoder(RobotMap.encLPortA, RobotMap.encLPortB, false, Encoder.EncodingType.k4X);
 	public Encoder encRight = new Encoder(RobotMap.encRPortA, RobotMap.encRPortB, false, Encoder.EncodingType.k4X);
@@ -42,11 +42,11 @@ public class DriveTrain extends Subsystem {
 		driveTrain.arcadeDrive(-speed, 0);
 	}
 	
-	public void turnClockwise(double speed) {
+	public void driveClock(double speed) {
 		driveTrain.arcadeDrive(0, speed);
 	}
 	
-	public void turnCounterClockwise(double speed) {
+	public void driveCounter(double speed) {
 		driveTrain.arcadeDrive(0, -speed);
 	}
 	

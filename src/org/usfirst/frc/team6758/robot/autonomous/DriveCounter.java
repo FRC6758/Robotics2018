@@ -7,15 +7,15 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class DriveForward extends Command {
+public class DriveCounter extends Command {
 
 	private double time = -1 , pulses = -1;
 	private boolean flag, rightFlag, leftFlag;
 	private int encLeft, encRight;
 	
-    public DriveForward(double measurement, boolean distance) {
+    public DriveCounter(double measurement, boolean degree) {
         // Use requires() here to declare subsystem dependencies
-        if(distance) pulses = measurement * RobotMap.PPI;
+        if(degree) pulses = measurement * RobotMap.PPD;
         else time = measurement;
     	requires(Robot.driveTrain);
     }
@@ -28,12 +28,12 @@ public class DriveForward extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if(time != -1)Robot.driveTrain.driveForward(RobotMap.defaultAutonSpeed);
+    	if(time != -1)Robot.driveTrain.driveCounter(RobotMap.defaultAutonSpeed);
     	else if(pulses != -1) {
-    		encLeft = Robot.driveTrain.encLeft.getRaw();
+    		encLeft = -Robot.driveTrain.encLeft.getRaw();
     		encRight = Robot.driveTrain.encRight.getRaw();
     		
-    		if(encLeft < pulses) Robot.driveTrain.left.set(RobotMap.defaultAutonSpeed);
+    		if(encLeft < pulses) Robot.driveTrain.left.set(-RobotMap.defaultAutonSpeed);
     		else {
     			Robot.driveTrain.left.set(0);
     			rightFlag = true;

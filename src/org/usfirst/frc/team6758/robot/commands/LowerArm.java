@@ -1,39 +1,37 @@
-package org.usfirst.frc.team6758.robot.autonomous;
+package org.usfirst.frc.team6758.robot.commands;
 
-import org.usfirst.frc.team6758.robot.subsystems.DriveTrain;
-import edu.wpi.first.wpilibj.Encoder;
+import org.usfirst.frc.team6758.robot.Robot;
+import org.usfirst.frc.team6758.robot.RobotMap;
+
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class AutonDrive extends Command {
-	
+public class LowerArm extends Command {
+
 	boolean flag;
 	
-    public AutonDrive() {
+    public LowerArm() {
         // Use requires() here to declare subsystem dependencies
+        requires(Robot.elevator);
     }
+
     // Called just before this Command runs the first time
     protected void initialize() {
-    	flag = false;
+    	if(Robot.elevator.bottomLimit.get()) flag = true;
+    	else flag = false;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	//enc0Distance = enc0.getRaw();
-    	
-    	new Auton().start();
-    	new AutoDriveLeft().start();
-    	System.out.println("DONE! AUTONDRIVE!");
-        flag = true;
+    	Robot.elevator.elevatorMotor.set(-RobotMap.elevatorAutonSpeed);
+    	if(Robot.elevator.bottomLimit.get()) flag = true;
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-    	//NEEDS VARIABLES
-    	return flag;
-    	
+        return flag;
     }
 
     // Called once after isFinished returns true
@@ -43,6 +41,5 @@ public class AutonDrive extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-    	System.out.println("AutonDrive Interrupted!");
     }
 }
