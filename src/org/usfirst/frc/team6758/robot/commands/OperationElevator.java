@@ -26,6 +26,8 @@ public class OperationElevator extends Command {
 		
 		if(pov > 85 && pov < 95 && Robot.elevator.topLimit.get()) Robot.elevator.elevatorMotor.set(RobotMap.elevatorSpeed);
 		else if(pov > 265 && pov < 275 && Robot.elevator.bottomLimit.get()) Robot.elevator.elevatorMotor.set(-RobotMap.elevatorSpeed);
+		else if(OI.stick.getRawButton(6)) Robot.elevator.elevatorMotor.set(RobotMap.elevatorSpeed);
+		else if(OI.stick.getRawButton(4)) Robot.elevator.elevatorMotor.set(-RobotMap.elevatorSpeed);
 		else Robot.elevator.stop();
     }
 
