@@ -1,6 +1,6 @@
 package org.usfirst.frc.team6758.robot.subsystems;
 
-import org.usfirst.frc.team6758.robot.commands.StopLift;
+import org.usfirst.frc.team6758.robot.commands.OperationElevator;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -20,8 +20,7 @@ public class Elevator extends Subsystem {
 
 	@Override
 	protected void initDefaultCommand() {
-		// TODO Auto-generated method stub
-		//setDefaultCommand(new StopLift());
+		setDefaultCommand(new OperationElevator());
 	}
 
 	public void stop() {

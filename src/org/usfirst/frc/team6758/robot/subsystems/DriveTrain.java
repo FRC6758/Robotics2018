@@ -1,6 +1,7 @@
 package org.usfirst.frc.team6758.robot.subsystems;
 
 import org.usfirst.frc.team6758.robot.RobotMap;
+import org.usfirst.frc.team6758.robot.commands.DriveRobot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
@@ -26,7 +27,7 @@ public class DriveTrain extends Subsystem {
 	
 	@Override
 	protected void initDefaultCommand() {
-		//setDefaultCommand();
+		setDefaultCommand(new DriveRobot());
 	}
 	
 	public void resetDistance() {

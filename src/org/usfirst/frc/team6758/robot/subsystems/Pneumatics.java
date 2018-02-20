@@ -1,8 +1,8 @@
 package org.usfirst.frc.team6758.robot.subsystems;
 
 import org.usfirst.frc.team6758.robot.RobotMap;
+import org.usfirst.frc.team6758.robot.commands.OperationPneumatics;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -12,7 +12,7 @@ public class Pneumatics extends Subsystem {
 	private static Solenoid puncher = new Solenoid(RobotMap.puncherPort);
 	
     public void initDefaultCommand() {
-        
+        setDefaultCommand(new OperationPneumatics());
     }
     
     public void clampBox() {

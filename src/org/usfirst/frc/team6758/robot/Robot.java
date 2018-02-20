@@ -13,16 +13,16 @@ import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.usfirst.frc.team6758.robot.autonomous.AutonChooser;
-import org.usfirst.frc.team6758.robot.commands.LiftArm;
-import org.usfirst.frc.team6758.robot.commands.LowerArm;
 import org.usfirst.frc.team6758.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team6758.robot.subsystems.Elevator;
 import org.usfirst.frc.team6758.robot.subsystems.Pneumatics;
 import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -48,13 +48,15 @@ public class Robot extends TimedRobot {
 	
 	public static Socket sock;
 	
-	private int pov;
 	protected int position;
 	
 	public static final DriveTrain driveTrain = new DriveTrain();
 	public static final Pneumatics pneumatics = new Pneumatics();
 	public static final Elevator elevator = new Elevator();
 	public static final OI oi = new OI();
+	
+	public static PowerDistributionPanel pdp = new PowerDistributionPanel(0);
+	public static BuiltInAccelerometer accel = new  BuiltInAccelerometer();
 	
 	@Override
 	public void robotInit() {
@@ -65,6 +67,7 @@ public class Robot extends TimedRobot {
 		m_chooser = new AutonChooser().makeAuton();
 		SmartDashboard.putData("Auto mode", m_chooser);
 		
+		SmartDashboard.putNumber("DriverStation Location", DriverStation.getInstance().getLocation());
 	
 		camera = CameraServer.getInstance().startAutomaticCapture(0);
 		camera.setResolution(352,  240);
@@ -112,6 +115,7 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
+		pdp.resetTotalEnergy();
 	}
 	
 	public void autonData(Point[] pts, Rect[] rts) {
@@ -122,21 +126,11 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		
-		pov = OI.controller.getPOV();
-		
-		System.out.println(pov);
-		
-		if(pov > 85 && pov < 95 && elevator.topLimit.get()) elevator.elevatorMotor.set(RobotMap.elevatorSpeed);
-		else if(pov > 265 && pov < 275 && elevator.bottomLimit.get()) elevator.elevatorMotor.set(-RobotMap.elevatorSpeed);
-		else elevator.stop();
-		
-		if(OI.stick.getRawButton(2)) pneumatics.kick();
-		else pneumatics.retract();
-		
-		if(OI.stick.getTrigger() || OI.controller.getTriggerAxis(GenericHID.Hand.kLeft) > .9) pneumatics.releaseBox();
-		else pneumatics.clampBox();
-		
-		driveTrain.driveTrain.arcadeDrive(-OI.stick.getY(), OI.stick.getTwist());
+		SmartDashboard.putNumber("PDP Temp: ", pdp.getTemperature());
+		SmartDashboard.putNumber("Power Consumed", pdp.getTotalPower());
+		SmartDashboard.putNumber("X-Axis Acceleration", accel.getX());
+		SmartDashboard.putNumber("Y-Axis Acceleration", accel.getY());
+		SmartDashboard.putNumber("Z-Axis Acceleration", accel.getZ());
 	}
 
 	@Override
