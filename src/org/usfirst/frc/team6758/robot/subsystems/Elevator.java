@@ -15,13 +15,13 @@ public class Elevator extends Subsystem {
 	public DigitalInput bottomLimit = new DigitalInput(5);
 	
 	public Elevator() {
-		
+		elevatorMotor.setInverted(true);
 	}
 
 	@Override
 	protected void initDefaultCommand() {
 		// TODO Auto-generated method stub
-		setDefaultCommand(new StopLift());
+		//setDefaultCommand(new StopLift());
 	}
 
 	public void stop() {

@@ -7,9 +7,11 @@
 
 package org.usfirst.frc.team6758.robot;
 
+import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 
 public class OI {
@@ -19,6 +21,5 @@ public class OI {
 	public static XboxController controller = new XboxController(1);
 	
 	public OI() {
-		
 	}
 }

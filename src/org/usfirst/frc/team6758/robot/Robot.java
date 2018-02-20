@@ -13,6 +13,8 @@ import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.usfirst.frc.team6758.robot.autonomous.AutonChooser;
+import org.usfirst.frc.team6758.robot.commands.LiftArm;
+import org.usfirst.frc.team6758.robot.commands.LowerArm;
 import org.usfirst.frc.team6758.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team6758.robot.subsystems.Elevator;
 import org.usfirst.frc.team6758.robot.subsystems.Pneumatics;
@@ -80,14 +82,13 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void disabledInit() {
-			Pneumatics.off();
+			m_chooser = new AutonChooser().makeAuton();
+			SmartDashboard.putData("Auto mode", m_chooser);
 	}
 
 	@Override
 	public void disabledPeriodic() {
 		Scheduler.getInstance().run();
-		m_chooser = new AutonChooser().makeAuton();
-		SmartDashboard.putData("Auto mode", m_chooser);
 	}
 
 	@Override
@@ -121,15 +122,21 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		
-		if(OI.controller.getTriggerAxis(GenericHID.Hand.kLeft) > .9) pneumatics.clampBox();
-		
 		pov = OI.controller.getPOV();
 		
-		if(OI.stick.getRawButton(2)) driveTrain.driveTrain.arcadeDrive(-stick.getY()*.8, stick.getTwist());
-		else driveTrain.driveTrain.arcadeDrive(-stick.getY()*.95, stick.getTwist()*.95);
+		System.out.println(pov);
 		
-				if(OI.stick.getTrigger() || OI.controller.getTriggerAxis(GenericHID.Hand.kLeft) > .9) pneumatics.releaseBox();
-				else pneumatics.clampBox();
+		if(pov > 85 && pov < 95 && elevator.topLimit.get()) elevator.elevatorMotor.set(RobotMap.elevatorSpeed);
+		else if(pov > 265 && pov < 275 && elevator.bottomLimit.get()) elevator.elevatorMotor.set(-RobotMap.elevatorSpeed);
+		else elevator.stop();
+		
+		if(OI.stick.getRawButton(2)) pneumatics.kick();
+		else pneumatics.retract();
+		
+		if(OI.stick.getTrigger() || OI.controller.getTriggerAxis(GenericHID.Hand.kLeft) > .9) pneumatics.releaseBox();
+		else pneumatics.clampBox();
+		
+		driveTrain.driveTrain.arcadeDrive(-OI.stick.getY(), OI.stick.getTwist());
 	}
 
 	@Override

@@ -13,12 +13,13 @@ public class AutonChooser {
 
 	protected String message, locations;
 	protected char switchPosition;
-	protected int location = -1;
+	protected int location = -1, position;
 	
 	private SendableChooser<Command> m_chooser = new SendableChooser<>();
 	private SendableChooser<Integer> locationChooser = new SendableChooser<>();
 
 	public AutonChooser() {
+		position = DriverStation.getInstance().getLocation();
 	}
 	
 	public SendableChooser<Command> makeAuton(){
@@ -33,10 +34,10 @@ public class AutonChooser {
     	m_chooser.addDefault("POSITION " + location + " | SWITCH " + switchPosition, new Nothing());
     	switch(locations) {
     	case "1L":
-    		m_chooser.addObject("Auton for position 1 switch left", new Nothing());
+    		m_chooser.addObject("Position 1 Switch", new Pos1Switch(switchPosition));
     		break;
     	case "1R":
-    		m_chooser.addObject("Position 1 | Switch Right", new Nothing());
+    		m_chooser.addObject("Position 1 Switch", new Pos1Switch(switchPosition));
     		break;
     	case "2L":
     		m_chooser.addObject("Position 2 | Switch Left", new Nothing());
@@ -59,8 +60,6 @@ public class AutonChooser {
     }
 	
 	public SendableChooser<Integer> makeLocations(){
-		
-		int position = DriverStation.getInstance().getLocation();
 		
 		locationChooser.addDefault("CURRENT POSITION: " + position + "", position);
 		locationChooser.addObject("Position 1", 1);
