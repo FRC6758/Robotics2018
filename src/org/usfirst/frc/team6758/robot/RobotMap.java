@@ -17,8 +17,8 @@ public class RobotMap {
 		PPI = 67.4, PPD = 10;
 	
 	//PCM
-	public static final int grabberPort = 0,
-							puncherPort = 1;
+	public static final int grabberPort = 1,
+							puncherPort = 0;
 	
 	//Motor Controllers
 	public static final int
@@ -35,10 +35,10 @@ public class RobotMap {
 	 * 
 	 * All speeds are on a scale of 0-1
 	 */
-	public static final double elevatorSpeed = 1;
+	public static final double elevatorSpeed = .85;
 	public static final double elevatorAutonSpeed = .4;
 	public static final double defaultAutonSpeed = .4;
-	public static final double twistSlowMultiplier = .7;
+	public static final double twistSlowMultiplier = .65;
 	
 	
 	/*

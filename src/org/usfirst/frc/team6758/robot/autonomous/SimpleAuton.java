@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 /**
  *
  */
-public class Pos2Switch extends CommandGroup {
+public class SimpleAuton extends CommandGroup {
 
-    public Pos2Switch(char switchPosition) {
-        if(switchPosition == 'R') {
-        	
-        }
+    public SimpleAuton() {
+        addSequential(new DriveForward(170, true));
+        addParallel(new LiftArm());
+        addSequential(new ArmRelease());
     }
 }

@@ -13,9 +13,12 @@ public class Pos1Switch extends CommandGroup {
     public Pos1Switch(char switchPosition) {
     	switch(switchPosition) {
     	case 'L':
-    		addSequential(new DriveForward(163, true));
+    		System.out.println("START LEFT");
+    		addSequential(new DriveForward(173, true));
+    		System.out.println("START DRIVECLOCK");
             addSequential(new DriveClock(90, true));
-            addParallel(new LiftArm());
+            System.out.println("Start LiftArm");
+            addSequential(new LiftArm());
             addSequential(new ArmRelease());
     		break;
     	case 'R':

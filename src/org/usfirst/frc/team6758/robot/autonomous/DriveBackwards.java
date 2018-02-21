@@ -39,7 +39,7 @@ public class DriveBackwards extends Command {
     			rightFlag = true;
     		}
     		
-    		if(encRight > pulses) Robot.driveTrain.right.set(-RobotMap.defaultAutonSpeed);
+    		if(encRight > pulses) Robot.driveTrain.right.set(RobotMap.defaultAutonSpeed);
     		else {
     			Robot.driveTrain.right.set(0);
     			leftFlag = true;

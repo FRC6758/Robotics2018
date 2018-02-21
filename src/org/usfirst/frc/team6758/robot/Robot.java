@@ -13,6 +13,7 @@ import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.usfirst.frc.team6758.robot.autonomous.AutonChooser;
+import org.usfirst.frc.team6758.robot.subsystems.Climber;
 import org.usfirst.frc.team6758.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team6758.robot.subsystems.Elevator;
 import org.usfirst.frc.team6758.robot.subsystems.Pneumatics;
@@ -54,6 +55,7 @@ public class Robot extends TimedRobot {
 	public static final Pneumatics pneumatics = new Pneumatics();
 	public static final Elevator elevator = new Elevator();
 	public static final OI oi = new OI();
+	public static final Climber climber = new Climber();
 	
 	public static PowerDistributionPanel pdp = new PowerDistributionPanel(0);
 	public static BuiltInAccelerometer accel = new  BuiltInAccelerometer();
@@ -115,7 +117,6 @@ public class Robot extends TimedRobot {
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.cancel();
 		}
-		pdp.resetTotalEnergy();
 	}
 	
 	public void autonData(Point[] pts, Rect[] rts) {
@@ -126,7 +127,7 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		
-		SmartDashboard.putNumber("PDP Temp: ", pdp.getTemperature());
+		SmartDashboard.putNumber("PDP Temp: ", pdp.getTemperature()*2.8 + 30);
 		SmartDashboard.putNumber("Power Consumed", pdp.getTotalPower());
 		SmartDashboard.putNumber("X-Axis Acceleration", accel.getX());
 		SmartDashboard.putNumber("Y-Axis Acceleration", accel.getY());

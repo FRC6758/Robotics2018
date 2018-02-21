@@ -16,10 +16,10 @@ public class Pneumatics extends Subsystem {
     }
     
     public void clampBox() {
-    	grabber.set(true);
+    	grabber.set(false);
     }
     public void releaseBox() {
-    	grabber.set(false);
+    	grabber.set(true);
     }
     public void kick() {
     	puncher.set(true);

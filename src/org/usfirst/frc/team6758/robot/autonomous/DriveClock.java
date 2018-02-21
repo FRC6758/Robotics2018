@@ -15,37 +15,42 @@ public class DriveClock extends Command {
 	
     public DriveClock(double measurement, boolean degree) {
         // Use requires() here to declare subsystem dependencies
-        if(degree) pulses = measurement * RobotMap.PPD;
-        else time = measurement;
     	requires(Robot.driveTrain);
+    	if(degree) pulses = measurement * RobotMap.PPD;
+        else time = measurement;
+    	
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	if(time != -1) setTimeout(time);
     	else flag = false;
+    	Robot.driveTrain.resetDistance();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if(time != -1)Robot.driveTrain.driveClock(RobotMap.defaultAutonSpeed);
     	else if(pulses != -1) {
-    		encLeft = Robot.driveTrain.encLeft.getRaw();
-    		encRight = -Robot.driveTrain.encRight.getRaw();
+    		encLeft = -Robot.driveTrain.encLeft.getRaw();
+    		encRight = Robot.driveTrain.encRight.getRaw();
     		
-    		if(encLeft < pulses) Robot.driveTrain.left.set(RobotMap.defaultAutonSpeed);
-    		else {
-    			Robot.driveTrain.left.set(0);
-    			rightFlag = true;
-    		}
+//    		if(encLeft < pulses) Robot.driveTrain.left.set(-RobotMap.defaultAutonSpeed);
+//    		else {
+//    			Robot.driveTrain.left.set(0);
+//    			rightFlag = true;
+//    		}
+//    		
+//    		if(encRight < pulses) Robot.driveTrain.right.set(RobotMap.defaultAutonSpeed);
+//    		else {
+//    			Robot.driveTrain.right.set(0);
+//    			leftFlag = true;
+//    		}
+//    		
+//    		if(leftFlag && rightFlag) flag = true;
     		
-    		if(encRight < pulses) Robot.driveTrain.right.set(-RobotMap.defaultAutonSpeed);
-    		else {
-    			Robot.driveTrain.right.set(0);
-    			leftFlag = true;
-    		}
-    		
-    		if(leftFlag && rightFlag) flag = true;
+    		if(pulses < encRight) Robot.driveTrain.driveClock(RobotMap.defaultAutonSpeed);
+    		else Robot.driveTrain.stop();
     		
     	}
     	else Robot.driveTrain.stop();
