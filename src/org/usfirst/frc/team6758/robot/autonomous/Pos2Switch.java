@@ -14,5 +14,8 @@ public class Pos2Switch extends CommandGroup {
         if(switchPosition == 'R') {
         	
         }
+        if(switchPosition == 'l') {
+        	
+        }
     }
 }
