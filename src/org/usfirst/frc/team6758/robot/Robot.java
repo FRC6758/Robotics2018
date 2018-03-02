@@ -57,7 +57,7 @@ public class Robot extends TimedRobot {
 	public static final OI oi = new OI();
 	public static final Climber climber = new Climber();
 	
-	public static PowerDistributionPanel pdp = new PowerDistributionPanel(0);
+	//public static PowerDistributionPanel pdp = new PowerDistributionPanel(0);
 	public static BuiltInAccelerometer accel = new  BuiltInAccelerometer();
 	
 	@Override
@@ -127,11 +127,12 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
 		
-		SmartDashboard.putNumber("PDP Temp: ", pdp.getTemperature()*2.8 + 30);
-		SmartDashboard.putNumber("Power Consumed", pdp.getTotalPower());
+		//SmartDashboard.putNumber("PDP Temp: ", pdp.getTemperature()*2.8 + 30);
+		//SmartDashboard.putNumber("Power Consumed", pdp.getTotalPower());
 		SmartDashboard.putNumber("X-Axis Acceleration", accel.getX());
 		SmartDashboard.putNumber("Y-Axis Acceleration", accel.getY());
 		SmartDashboard.putNumber("Z-Axis Acceleration", accel.getZ());
+		System.out.println(driveTrain.encLeft.get());
 	}
 
 	@Override

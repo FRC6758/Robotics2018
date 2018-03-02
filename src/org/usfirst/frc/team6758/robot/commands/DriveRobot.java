@@ -18,7 +18,7 @@ public class DriveRobot extends Command {
     protected void initialize() {}
 
     protected void execute() {
-    	if(!OI.stick.getRawButton(11))Robot.driveTrain.driveTrain.arcadeDrive(-OI.stick.getY(), OI.stick.getTwist()* RobotMap.twistSlowMultiplier);
+    	if(!OI.stick.getRawButton(11))Robot.driveTrain.driveTrain.arcadeDrive(-OI.stick.getY()*.75, OI.stick.getTwist()* RobotMap.twistSlowMultiplier);
     	else Robot.driveTrain.driveTrain.arcadeDrive(-OI.stick.getY()* RobotMap.twistSlowMultiplier, OI.stick.getTwist());
     }
     

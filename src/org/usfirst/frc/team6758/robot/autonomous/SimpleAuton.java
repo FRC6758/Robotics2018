@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class SimpleAuton extends CommandGroup {
 
     public SimpleAuton() {
-        addSequential(new DriveForward(170, true));
-        addParallel(new LiftArm());
+        addSequential(new DriveForward(10, true));
+        addSequential(new LiftArm());
         addSequential(new ArmRelease());
     }
 }

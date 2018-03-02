@@ -13,25 +13,23 @@ public class Pos1Switch extends CommandGroup {
     public Pos1Switch(char switchPosition) {
     	switch(switchPosition) {
     	case 'L':
-    		System.out.println("START LEFT");
-    		addSequential(new DriveForward(173, true));
-    		System.out.println("START DRIVECLOCK");
-            addSequential(new DriveClock(90, true));
-            System.out.println("Start LiftArm");
+    		addSequential(new DriveForward(6, false));
+            addSequential(new DriveClock(3, false));
+            addSequential(new DriveForward(2, false));
             addSequential(new LiftArm());
             addSequential(new ArmRelease());
     		break;
     	case 'R':
-    		addSequential(new DriveForward(228, true));
-            addSequential(new DriveClock(90, true));
-            addSequential(new DriveForward(131 ,true));
-            addSequential(new DriveClock(90, true));
+    		addSequential(new DriveForward(7, false));
+            addSequential(new DriveClock(3, false));
+            addSequential(new DriveForward(3 ,false));
+            addSequential(new DriveClock(2, false));
             addParallel(new LiftArm());
             addSequential(new ArmRelease());
     		break;
     	default:
     		System.out.println("FATAL ERROR - Pos1Swtich: 30");
-    		addSequential(new DriveForward(163, true));
+    		addSequential(new DriveForward(15, false));
     	}
     }
 }

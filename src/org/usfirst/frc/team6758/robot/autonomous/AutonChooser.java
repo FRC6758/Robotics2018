@@ -35,24 +35,25 @@ public class AutonChooser {
     	switch(locations) {
     	case "1L":
     		m_chooser.addObject("Position 1 Switch", new Pos1Switch(switchPosition));
-    		m_chooser.addObject("Drive Clock" , new DriveClock(90, true));
+    		m_chooser.addObject("Drive Clock" , new DriveClock(10, false));
     		m_chooser.addObject("Drive Counter", new DriveCounter(5, false));
     		m_chooser.addObject("Simple Auton", new SimpleAuton());
     		break;
     	case "1R":
-    		m_chooser.addObject("Position 1 Switch", new Pos1Switch(switchPosition));
+    		m_chooser.addObject("Position 1 Switch Time", new Pos1Switch(switchPosition));
+    		//m_chooser.addObject("Position 1 Encoder", new EncAutonSwitch(switchPosition));
     		break;
     	case "2L":
-    		m_chooser.addObject("Position 2 | Switch Left", new Nothing());
+    		m_chooser.addObject("Position 2 Switch Time", new Pos2Switch(switchPosition));
     		break;
     	case "2R":
-    		m_chooser.addObject("Position 2 | Switch Right", new Nothing());
+    		m_chooser.addObject("Position 2 Switch Time", new Pos2Switch(switchPosition));
     		break;
     	case "3L":
-    		m_chooser.addObject("Position 3 | Switch Left", new Nothing());
+    		m_chooser.addObject("Position 3 Switch Time", new Pos3Switch(switchPosition));
     		break;
     	case "3R":
-    		m_chooser.addObject("Position 3 | Switch Right", new Nothing());
+    		m_chooser.addObject("Position 3 Switch Time", new Pos3Switch(switchPosition));
     		break;
     	default:
     		m_chooser.addObject("No route: " + location+" , "+switchPosition, new Nothing());
