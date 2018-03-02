@@ -128,11 +128,9 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().run();
 		
 		//SmartDashboard.putNumber("PDP Temp: ", pdp.getTemperature()*2.8 + 30);
-		//SmartDashboard.putNumber("Power Consumed", pdp.getTotalPower());
+		//SmartDashboard.putNumber("Power Consumed", pdp.getTotalPower
 		SmartDashboard.putNumber("X-Axis Acceleration", accel.getX());
 		SmartDashboard.putNumber("Y-Axis Acceleration", accel.getY());
-		SmartDashboard.putNumber("Z-Axis Acceleration", accel.getZ());
-		System.out.println(driveTrain.encLeft.get());
 	}
 
 	@Override

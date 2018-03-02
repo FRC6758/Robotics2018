@@ -36,5 +36,8 @@ public class Pos2Switch extends CommandGroup {
         	addSequential(new DriveCounter(2, false));
         	addSequential(new DriveForward(4, false));
         }
+        if(switchPosition == 'l') {
+        	
+        }
     }
 }

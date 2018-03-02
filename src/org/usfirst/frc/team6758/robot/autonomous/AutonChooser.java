@@ -27,7 +27,7 @@ public class AutonChooser {
     	message = DriverStation.getInstance().getGameSpecificMessage();
     	location = Robot.locationChooser.getSelected();
     	if(location == -1) return m_chooser;
-    	switchPosition = message.charAt(0);
+    	if(message != null) switchPosition = message.charAt(0);
     	
     	locations = location + (switchPosition + "");
     	
