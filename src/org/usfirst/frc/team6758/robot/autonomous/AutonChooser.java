@@ -38,6 +38,7 @@ public class AutonChooser {
     		m_chooser.addObject("Drive Clock" , new DriveClock(10, false));
     		m_chooser.addObject("Drive Counter", new DriveCounter(5, false));
     		m_chooser.addObject("Simple Auton", new SimpleAuton());
+    		m_chooser.addObject("Encoders", new EncAutonSwitch(1, 'L'));
     		break;
     	case "1R":
     		m_chooser.addObject("Position 1 Switch Time", new Pos1Switch(switchPosition));
