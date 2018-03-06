@@ -2,24 +2,52 @@ package org.usfirst.frc.team6758.robot.autonomous;
 
 import org.usfirst.frc.team6758.robot.Robot;
 
-import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class EncAutonSwitch extends CommandGroup {
+public class EncAutonSwitch extends Command {
 
 	int encLeft, encRight;
-	int pulses = 86000;
+	int pulses = 10000;
 	
-    public EncAutonSwitch(int location, char switchPosition) {
+    public EncAutonSwitch() {
+        // Use requires() here to declare subsystem dependencies
+        requires(Robot.driveTrain);
+    }
+
+    // Called just before this Command runs the first time
+    protected void initialize() {
     	Robot.driveTrain.resetDistance();
-    	encLeft = Robot.driveTrain.encLeft.get();
-    	encRight = Robot.driveTrain.encRight.get();
-    	
-    	if(true) Robot.driveTrain.left.set(.6);
-    	else Robot.driveTrain.left.set(0);
-    	if(true) Robot.driveTrain.right.set(.6);
-    	else Robot.driveTrain.right.set(0);
+    }
+
+    // Called repeatedly when this Command is scheduled to run
+    protected void execute() {
+       	encLeft = Robot.driveTrain.encLeft.get();
+       	encRight = Robot.driveTrain.encRight.get();
+       	if(pulses > Math.abs(encRight)) {
+       		Robot.driveTrain.driveForward(.75);
+       		System.out.println("GOOOOO");
+       		System.out.println("LOG ENCRIGHT: " + encRight);
+       	}
+       	else {
+       		System.out.println("STOPPPPPPPPPP");
+       		Robot.driveTrain.stop();
+       	}
+    }
+
+    // Make this return true when this Command no longer needs to run execute()
+    protected boolean isFinished() {
+        return false;
+    }
+
+    // Called once after isFinished returns true
+    protected void end() {
+    }
+
+    // Called when another command which requires one or more of the same
+    // subsystems is scheduled to run
+    protected void interrupted() {
     }
 }
