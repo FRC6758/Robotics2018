@@ -82,7 +82,18 @@ public class Robot extends TimedRobot {
 		//sock = new Socket();
 		//Thread thr = new Thread(new CommsThread(this));
 		//thr.start();
-    	
+		
+		//Auton chooser being activated
+		autonChooser.addDefault("Nothing", new Nothing());
+		autonChooser.addObject("Drive Forward TIMED", new DriveForward(5));
+		autonChooser.addObject("Drive Forward ENCODER", new EncDriveForward(10));
+		autonChooser.addObject("Middle Cube TIMED", new Nothing() ); //TODO Change Middle TIMED
+		autonChooser.addObject("Middle Cube ENCODER", new Nothing() ); //TODO Change Middle Encoder
+		autonChooser.addObject("Left Cube TIMED", new Nothing() ); //TODO Change Left Time
+		autonChooser.addObject("Left Cube ENCODER", new Nothing() ); //TODO Change Left Enc
+		autonChooser.addObject("Right Cube TIMED", new Nothing()); //TODO Change Right Time
+		autonChooser.addObject("Right Cube Encoder", new Nothing()); //TODO Change Right Enc
+		
 	}
 	
 	@Override
