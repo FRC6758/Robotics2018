@@ -20,8 +20,8 @@ public class DriveRobot extends Command {
     protected void execute() {
     	System.out.println("LEFT: " + Robot.driveTrain.encLeft.get());
     	System.out.println("RIGHT: " + Robot.driveTrain.encRight.get());
-    	if(!OI.stick.getRawButton(11))Robot.driveTrain.driveTrain.arcadeDrive(-OI.stick.getY()*.75, OI.stick.getTwist()* RobotMap.twistSlowMultiplier);
-    	else Robot.driveTrain.driveTrain.arcadeDrive(-OI.stick.getY()* RobotMap.twistSlowMultiplier, OI.stick.getTwist());
+    	if(!OI.stick.getRawButton(11))Robot.driveTrain.driveTrain.arcadeDrive(-OI.stick.getY(), OI.stick.getTwist()* RobotMap.twistSlowMultiplier);
+    	else Robot.driveTrain.driveTrain.arcadeDrive(-OI.stick.getY(), OI.stick.getTwist());
     }
     
     protected boolean isFinished() {

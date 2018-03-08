@@ -13,6 +13,9 @@ import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.usfirst.frc.team6758.robot.autonomous.AutonChooser;
+import org.usfirst.frc.team6758.robot.autonomous.DriveForward;
+import org.usfirst.frc.team6758.robot.autonomous.EncDriveForward;
+import org.usfirst.frc.team6758.robot.autonomous.Nothing;
 import org.usfirst.frc.team6758.robot.subsystems.Climber;
 import org.usfirst.frc.team6758.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team6758.robot.subsystems.Elevator;
@@ -59,6 +62,7 @@ public class Robot extends TimedRobot {
 	
 	//public static PowerDistributionPanel pdp = new PowerDistributionPanel(0);
 	public static BuiltInAccelerometer accel = new  BuiltInAccelerometer();
+	public SendableChooser<Command> autonChooser = new SendableChooser<>();
 	
 	@Override
 	public void robotInit() {
@@ -87,8 +91,6 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void disabledInit() {
-			m_chooser = new AutonChooser().makeAuton();
-			SmartDashboard.putData("Auto mode", m_chooser);
 	}
 
 	@Override
@@ -99,8 +101,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void autonomousInit() {
 		//Will get the selected auto mode from a list
-		m_autonomousCommand = m_chooser.getSelected();
-
+		//m_autonomousCommand = m_chooser.getSelected();
+		m_autonomousCommand = new DriveForward(5);
+		
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {
 			m_autonomousCommand.start();

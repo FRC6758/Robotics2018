@@ -1,6 +1,7 @@
 package org.usfirst.frc.team6758.robot.autonomous;
 
 import org.usfirst.frc.team6758.robot.Robot;
+import org.usfirst.frc.team6758.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -10,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class EncAutonSwitch extends Command {
 
 	int encLeft, encRight;
-	int pulses = 10000;
+	int pulses = 11000;
 	
     public EncAutonSwitch() {
         // Use requires() here to declare subsystem dependencies
@@ -27,9 +28,7 @@ public class EncAutonSwitch extends Command {
        	encLeft = Robot.driveTrain.encLeft.get();
        	encRight = Robot.driveTrain.encRight.get();
        	if(pulses > Math.abs(encRight)) {
-       		Robot.driveTrain.driveForward(.75);
-       		System.out.println("GOOOOO");
-       		System.out.println("LOG ENCRIGHT: " + encRight);
+       		Robot.driveTrain.driveForward(RobotMap.autonFastSpeed);
        	}
        	else {
        		System.out.println("STOPPPPPPPPPP");
