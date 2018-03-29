@@ -7,13 +7,6 @@
 
 package org.usfirst.frc.team6758.robot;
 
-import java.net.Socket;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import org.opencv.core.Mat;
-import org.opencv.core.Point;
-import org.opencv.core.Rect;
 import org.usfirst.frc.team6758.robot.autonomous.DriveForward;
 import org.usfirst.frc.team6758.robot.autonomous.LeftTimed;
 import org.usfirst.frc.team6758.robot.autonomous.Nothing;
