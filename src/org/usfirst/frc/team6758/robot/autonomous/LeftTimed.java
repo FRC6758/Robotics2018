@@ -13,13 +13,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class LeftTimed extends CommandGroup {
 
     public LeftTimed() {
-    	/*
-    	 * I'm gonna go on a limb and assume that this means the cubes
-    	 * are on the left. If you object, feel free to change it :)
-    	 */
 			addSequential(new DriveForward(4.75));
 			addSequential(new TurnClock(1));
-			addSequential(new DriveForward(.75));
+			addSequential(new DriveForward(2));
 			addSequential(new LiftArm());
 			addSequential(new ArmRelease());
     }
