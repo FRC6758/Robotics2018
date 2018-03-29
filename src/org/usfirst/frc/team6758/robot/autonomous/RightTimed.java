@@ -13,26 +13,30 @@ public class RightTimed extends CommandGroup {
 
     public RightTimed() {
     	System.out.println("STARTING - RightTimed.java");
+    	
+    }
+    
+    public void finishInit() {
     	if(Robot.switchPosition == 'R') {
-		System.out.println("Executing Right Switch Position Auton - RightTimed.java");
-			addSequential(new DriveForward(4.75));
-			addSequential(new TurnClock(2));			
-			addSequential(new DriveForward(1));
-			addParallel(new LiftArm());
-			addSequential(new ArmRelease());
-    	}
-    	else if(Robot.switchPosition == 'L') {
-    		addSequential(new DriveForward(8));
-    		System.out.println("This feature is coming soon!");
-//    		addSequential(new DriveForward(4.75));
-//    		addSequential(new TurnClock(2));			
-//    		addSequential(new DriveForward(3));
-//    		addSequential(new TurnClock(2));
-//    		addParallel(new LiftArm());
-//    		addSequential(new ArmRelease());
-    	}
-    	else {
-    		System.out.println("Something went wrong when recieving the gamedata, I will do nothing.");
-    	}
+    		System.out.println("Executing Right Switch Position Auton - RightTimed.java");
+    			addSequential(new DriveForward(4.75));
+    			addSequential(new TurnClock(2));			
+    			addSequential(new DriveForward(1));
+    			addParallel(new LiftArm());
+    			addSequential(new ArmRelease());
+        	}
+        	else if(Robot.switchPosition == 'L') {
+        		addSequential(new DriveForward(8));
+        		System.out.println("This feature is coming soon!");
+//        		addSequential(new DriveForward(4.75));
+//        		addSequential(new TurnClock(2));			
+//        		addSequential(new DriveForward(3));
+//        		addSequential(new TurnClock(2));
+//        		addParallel(new LiftArm());
+//        		addSequential(new ArmRelease());
+        	}
+        	else {
+        		System.out.println("Something went wrong when recieving the gamedata, I will do nothing.");
+        	}
     }
 }

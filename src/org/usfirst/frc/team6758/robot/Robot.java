@@ -51,6 +51,9 @@ public class Robot extends TimedRobot {
 	public static final Elevator elevator = new Elevator();
 	public static final OI oi = new OI();
 	public static final Climber climber = new Climber();
+	public static final TimedMiddle timedMiddle = new TimedMiddle();
+	public static final RightTimed timedRight = new RightTimed();
+	public static final LeftTimed timedLeft = new LeftTimed();
 
 	public SendableChooser<Command> autonChooser = new SendableChooser<>();
 	
@@ -65,9 +68,9 @@ public class Robot extends TimedRobot {
 		//Auton chooser being activated
 		autonChooser.addDefault("Nothing", new Nothing());
 		autonChooser.addObject("Drive Forward TIMED", new DriveForward(12));
-		autonChooser.addObject("Middle Cube TIMED", new TimedMiddle()); //TODO Dail in TimedMiddle()
-		autonChooser.addObject("Left Cube TIMED", new LeftTimed()); //TODO Dail in LeftTimed()
-		autonChooser.addObject("Right Cube TIMED", new RightTimed()); //TOOD Dail in RightTimed()
+		autonChooser.addObject("Middle Cube TIMED", timedMiddle); //TODO Dail in TimedMiddle()
+		autonChooser.addObject("Left Cube TIMED", timedLeft); //TODO Dail in LeftTimed()
+		autonChooser.addObject("Right Cube TIMED", timedRight); //TOOD Dail in RightTimed()
 		System.out.println("AutonChooser Created - Robot.java : 80");
 		
 		SmartDashboard.putData("Auto mode", autonChooser);
@@ -94,6 +97,9 @@ public class Robot extends TimedRobot {
 		switchPosition = DriverStation.getInstance().getGameSpecificMessage().charAt(0);
 		m_autonomousCommand = autonChooser.getSelected();
 		System.out.println(autonChooser.getSelected() + " Selected!");
+		timedLeft.finishInit();
+		timedMiddle.finishInit();
+		timedRight.finishInit();
 		
 		// schedule the autonomous command (example)
 		if (m_autonomousCommand != null) {

@@ -35,10 +35,10 @@ public class RobotMap {
 	 * 
 	 * All speeds are on a scale of 0-1
 	 */
-	public static final double elevatorSpeed = .85;
-	public static final double elevatorAutonSpeed = .6;
-	public static final double defaultAutonSpeed = .45;
-	public static final double twistSlowMultiplier = .78;
+	public static final double elevatorSpeed = 1;
+	public static final double elevatorAutonSpeed = .85;
+	public static final double defaultAutonSpeed = .6;
+	public static final double twistSlowMultiplier = .85; // .78
 	public static final double autonFastSpeed = .75;
 	
 	/*
