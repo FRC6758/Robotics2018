@@ -88,9 +88,9 @@ public class Robot extends TimedRobot {
 		
 		//Auton chooser being activated
 		autonChooser.addDefault("Nothing", new Nothing());
-		autonChooser.addObject("Drive Forward TIMED", new DriveForward(4.4));
+		autonChooser.addObject("Drive Forward TIMED", new DriveForward(12));
 //		autonChooser.addObject("Drive Forward ENCODER", new EncDriveForward(1100));
-		autonChooser.addObject("Middle Cube TIMED", new TimedMiddle() ); //TODO Dial in
+//		autonChooser.addObject("Middle Cube TIMED", new TimedMiddle() ); //TODO Dial in
 //		autonChooser.addObject("Middle Cube ENCODER", new EncMiddle() ); //TODO Dial in
 		autonChooser.addObject("Left Cube TIMED", new LeftTimed() ); //TODO Dial in
 //		autonChooser.addObject("Left Cube ENCODER", new EncLeft() ); //TODO Dial in
