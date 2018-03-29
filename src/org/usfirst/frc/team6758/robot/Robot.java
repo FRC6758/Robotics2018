@@ -29,6 +29,7 @@ import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -42,6 +43,7 @@ public class Robot extends TimedRobot {
 	
 	public static OI m_oi;
 	public static Joystick stick = new Joystick(0);
+	public static char switchPosition;
 	
 	Command m_autonomousCommand;
 	public SendableChooser<Command> m_chooser;
@@ -77,7 +79,7 @@ public class Robot extends TimedRobot {
 		autonChooser.addObject("Middle Cube TIMED", new TimedMiddle() ); //TODO MAKE MIDDLE TIME AUTON
 		autonChooser.addObject("Left Cube TIMED", new LeftTimed() ); //TODO MAKE LEFT TIMED AUTON
 		autonChooser.addObject("Right Cube TIMED", new RightTimed() ); //TODO MAKE RIGHT TIMED AUTON
-		System.out.println("AutonChooser Created - Robot.java : 102");
+		System.out.println("AutonChooser Created - Robot.java : 80");
 		
 		SmartDashboard.putData("Auto mode", autonChooser);
 		
@@ -99,8 +101,8 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void autonomousInit() {
-		//Will get the selected auto mode from a list
-		//m_autonomousCommand = m_chooser.getSelected();
+		
+		switchPosition = DriverStation.getInstance().getGameSpecificMessage().charAt(0);
 		m_autonomousCommand = autonChooser.getSelected();
 		System.out.println(autonChooser.getSelected() + " Selected!");
 		
