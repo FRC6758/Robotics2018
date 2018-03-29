@@ -37,13 +37,14 @@ public class AutonChooser {
     		m_chooser.addObject("Position 1 Switch", new Pos1Switch(switchPosition));
     		m_chooser.addObject("Drive Clock" , new DriveClock(90, true));
     		m_chooser.addObject("Drive Counter", new DriveCounter(5, false));
-    		m_chooser.addObject("Simple Auton", new SimpleAuton());
     		break;
     	case "1R":
     		m_chooser.addObject("Position 1 Switch", new Pos1Switch(switchPosition));
+    		m_chooser.addObject("", new Nothing());
     		break;
     	case "2L":
     		m_chooser.addObject("Position 2 | Switch Left", new Nothing());
+    		m_chooser.addObject("Position 2 Switch", new Pos2Switch(switchPosition));
     		break;
     	case "2R":
     		m_chooser.addObject("Position 2 | Switch Right", new Nothing());
