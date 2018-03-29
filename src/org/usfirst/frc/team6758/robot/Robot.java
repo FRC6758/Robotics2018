@@ -48,12 +48,8 @@ public class Robot extends TimedRobot {
 	public static SendableChooser<Integer> locationChooser;
 	
 	public UsbCamera camera;
-	public Mat source, output;
-	public GripPipeline grip;
 
 	public static Compressor compressor = new Compressor(0);
-	
-	public static Socket sock;
 	
 	protected int position;
 	
@@ -70,32 +66,17 @@ public class Robot extends TimedRobot {
 	@Override
 	public void robotInit() {
 		m_oi = new OI();
-		//locationChooser = new AutonChooser().makeLocations();
-		//SmartDashboard.putData("Position", locationChooser);
-		
-		//m_chooser = new AutonChooser().makeAuton();
-		
-		
-		//SmartDashboard.putNumber("DriverStation Location", DriverStation.getInstance().getLocation());
 	
 		camera = CameraServer.getInstance().startAutomaticCapture(0);
 		camera.setResolution(352,  240);
 		camera.setFPS(30);
 		
-		//sock = new Socket();
-		//Thread thr = new Thread(new CommsThread(this));
-		//thr.start();
-		
 		//Auton chooser being activated
 		autonChooser.addDefault("Nothing", new Nothing());
 		autonChooser.addObject("Drive Forward TIMED", new DriveForward(12));
-//		autonChooser.addObject("Drive Forward ENCODER", new EncDriveForward(1100));
-//		autonChooser.addObject("Middle Cube TIMED", new TimedMiddle() ); //TODO Dial in
-//		autonChooser.addObject("Middle Cube ENCODER", new EncMiddle() ); //TODO Dial in
-		autonChooser.addObject("Left Cube TIMED", new LeftTimed() ); //TODO Dial in
-//		autonChooser.addObject("Left Cube ENCODER", new EncLeft() ); //TODO Dial in
-		autonChooser.addObject("Right Cube TIMED", new RightTimed() ); //TODO Dial in
-//		autonChooser.addObject("Right Cube Encoder", new EncRight() ); //TODO Dial in
+		autonChooser.addObject("Middle Cube TIMED", new TimedMiddle() ); //TODO MAKE MIDDLE TIME AUTON
+		autonChooser.addObject("Left Cube TIMED", new LeftTimed() ); //TODO MAKE LEFT TIMED AUTON
+		autonChooser.addObject("Right Cube TIMED", new RightTimed() ); //TODO MAKE RIGHT TIMED AUTON
 		System.out.println("AutonChooser Created - Robot.java : 102");
 		
 		SmartDashboard.putData("Auto mode", autonChooser);
@@ -141,10 +122,6 @@ public class Robot extends TimedRobot {
 		}
 		
 		driveTrain.resetDistance();
-	}
-	
-	public void autonData(Point[] pts, Rect[] rts) {
-		// TODO: Do something with the data
 	}
 
 	@Override
