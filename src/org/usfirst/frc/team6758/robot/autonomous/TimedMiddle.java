@@ -23,6 +23,12 @@ public class TimedMiddle extends CommandGroup{
 			public void run() {
 				while(!isValid) {
 					try {
+						Thread.sleep(0);
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					try {
 						switchPosition = DriverStation.getInstance().getGameSpecificMessage().charAt(0);
 						isValid = true;
 						contInit();
