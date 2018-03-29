@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class DriveForward extends Command {
+public class TurnCounter extends Command {
 
-	public double time;
+	private double time;
 	
-    public DriveForward(double time) {
+    public TurnCounter(double time) {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.driveTrain);
         this.time = time;
@@ -25,7 +25,7 @@ public class DriveForward extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveTrain.driveForward(RobotMap.defaultAutonSpeed);
+    	Robot.driveTrain.driveCounter(RobotMap.defaultAutonSpeed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -41,5 +41,6 @@ public class DriveForward extends Command {
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
+    	System.out.println("ERROR - TurnCounter.java");
     }
 }

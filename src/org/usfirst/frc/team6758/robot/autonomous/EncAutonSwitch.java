@@ -8,34 +8,41 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class DriveForward extends Command {
+public class EncAutonSwitch extends Command {
 
-	public double time;
+	int encLeft, encRight;
+	int pulses = 11000;
 	
-    public DriveForward(double time) {
+    public EncAutonSwitch() {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.driveTrain);
-        this.time = time;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	setTimeout(time);
+    	Robot.driveTrain.resetDistance();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveTrain.driveForward(RobotMap.defaultAutonSpeed);
+       	encLeft = Robot.driveTrain.encLeft.get();
+       	encRight = Robot.driveTrain.encRight.get();
+       	if(pulses > Math.abs(encRight)) {
+       		Robot.driveTrain.driveForward(RobotMap.autonFastSpeed);
+       	}
+       	else {
+       		System.out.println("STOPPPPPPPPPP");
+       		Robot.driveTrain.stop();
+       	}
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return isTimedOut();
+        return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-    	Robot.driveTrain.stop();
     }
 
     // Called when another command which requires one or more of the same

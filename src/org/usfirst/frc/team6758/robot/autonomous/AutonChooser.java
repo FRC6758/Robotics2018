@@ -10,8 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
  *
  */
 public class AutonChooser {
-
-	protected String message, locations;
+	protected String locations;
 	protected char switchPosition;
 	protected int location = -1, position;
 	
@@ -19,17 +18,16 @@ public class AutonChooser {
 	private SendableChooser<Integer> locationChooser = new SendableChooser<>();
 
 	public AutonChooser() {
-		position = DriverStation.getInstance().getLocation();
+		//This would crash the bot, but I'm not sure if I wanna remove it.
+//		position = DriverStation.getInstance().getLocation();
 	}
 	
 	public SendableChooser<Command> makeAuton(){
     	DriverStation.getInstance().waitForData();
-    	message = DriverStation.getInstance().getGameSpecificMessage();
-    	location = Robot.locationChooser.getSelected();
+    	//message = DriverStation.getInstance().getGameSpecificMessage();
+    	//location = Robot.locationChooser.getSelected();
     	if(location == -1) return m_chooser;
-    	if(message != null) switchPosition = message.charAt(0);
-    	
-    	locations = location + (switchPosition + "");
+    	//if(message != null) switchPosition = message.charAt(0);
     	
     	m_chooser.addDefault("POSITION " + location + " | SWITCH " + switchPosition, new Nothing());
     	switch(locations) {
@@ -45,19 +43,6 @@ public class AutonChooser {
     	case "2L":
     		m_chooser.addObject("Position 2 | Switch Left", new Nothing());
     		m_chooser.addObject("Position 2 Switch", new Pos2Switch(switchPosition));
-    		break;
-    	case "2R":
-    		m_chooser.addObject("Position 2 | Switch Right", new Nothing());
-    		break;
-    	case "3L":
-    		m_chooser.addObject("Position 3 | Switch Left", new Nothing());
-    		break;
-    	case "3R":
-    		m_chooser.addObject("Position 3 | Switch Right", new Nothing());
-    		break;
-    	default:
-    		m_chooser.addObject("No route: " + location+" , "+switchPosition, new Nothing());
-    		break;
     	}
     	
 		return m_chooser;
@@ -72,5 +57,8 @@ public class AutonChooser {
 		
 		
 		return locationChooser;
+	}
+	
+	public void encChooseCross() {
 	}
 }

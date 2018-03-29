@@ -19,14 +19,19 @@ public class LiftArm extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if(Robot.elevator.topLimit.get()) flag = true;
-    	else flag = false;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.elevator.elevatorMotor.set(RobotMap.elevatorAutonSpeed);
-    	if(Robot.elevator.topLimit.get()) flag = true;
+    	System.out.println(flag);
+    	if(Robot.elevator.topLimit.get()) {
+    		Robot.elevator.elevatorMotor.set(RobotMap.elevatorAutonSpeed);
+    		flag = false;
+    	}
+    	else {
+    		flag = true;
+    	}
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()

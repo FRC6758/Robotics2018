@@ -8,11 +8,11 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class DriveForward extends Command {
-
-	public double time;
+public class TurnClock extends Command {
 	
-    public DriveForward(double time) {
+	double time;
+
+    public TurnClock(double time) {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.driveTrain);
         this.time = time;
@@ -25,7 +25,7 @@ public class DriveForward extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveTrain.driveForward(RobotMap.defaultAutonSpeed);
+    	Robot.driveTrain.driveClock(RobotMap.defaultAutonSpeed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
