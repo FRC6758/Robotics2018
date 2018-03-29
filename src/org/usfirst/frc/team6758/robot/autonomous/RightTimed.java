@@ -1,11 +1,9 @@
 package org.usfirst.frc.team6758.robot.autonomous;
 
 import org.usfirst.frc.team6758.robot.Robot;
-import org.usfirst.frc.team6758.robot.commands.ArmGrab;
 import org.usfirst.frc.team6758.robot.commands.ArmRelease;
 import org.usfirst.frc.team6758.robot.commands.LiftArm;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -24,6 +22,7 @@ public class RightTimed extends CommandGroup {
 			addSequential(new ArmRelease());
     	}
     	else if(Robot.switchPosition == 'L') {
+    		addSequential(new DriveForward(8));
     		System.out.println("This feature is coming soon!");
 //    		addSequential(new DriveForward(4.75));
 //    		addSequential(new TurnClock(2));			
@@ -31,6 +30,9 @@ public class RightTimed extends CommandGroup {
 //    		addSequential(new TurnClock(2));
 //    		addParallel(new LiftArm());
 //    		addSequential(new ArmRelease());
+    	}
+    	else {
+    		System.out.println("Something went wrong when recieving the gamedata, I will do nothing.");
     	}
     }
 }

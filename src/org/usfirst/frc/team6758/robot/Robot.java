@@ -12,14 +12,12 @@ import org.usfirst.frc.team6758.robot.autonomous.LeftTimed;
 import org.usfirst.frc.team6758.robot.autonomous.Nothing;
 import org.usfirst.frc.team6758.robot.autonomous.RightTimed;
 import org.usfirst.frc.team6758.robot.autonomous.TimedMiddle;
-import org.usfirst.frc.team6758.robot.commands.LiftArm;
 import org.usfirst.frc.team6758.robot.subsystems.Climber;
 import org.usfirst.frc.team6758.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team6758.robot.subsystems.Elevator;
 import org.usfirst.frc.team6758.robot.subsystems.Pneumatics;
 
 import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -53,9 +51,7 @@ public class Robot extends TimedRobot {
 	public static final Elevator elevator = new Elevator();
 	public static final OI oi = new OI();
 	public static final Climber climber = new Climber();
-	
-	//public static PowerDistributionPanel pdp = new PowerDistributionPanel(0);
-	public static BuiltInAccelerometer accel = new  BuiltInAccelerometer();
+
 	public SendableChooser<Command> autonChooser = new SendableChooser<>();
 	
 	@Override
@@ -69,9 +65,9 @@ public class Robot extends TimedRobot {
 		//Auton chooser being activated
 		autonChooser.addDefault("Nothing", new Nothing());
 		autonChooser.addObject("Drive Forward TIMED", new DriveForward(12));
-		autonChooser.addObject("Middle Cube TIMED", new TimedMiddle() ); //TODO MAKE MIDDLE TIME AUTON
-		autonChooser.addObject("Left Cube TIMED", new LeftTimed() ); //TODO MAKE LEFT TIMED AUTON
-		autonChooser.addObject("Right Cube TIMED", new RightTimed() ); //TODO MAKE RIGHT TIMED AUTON
+		autonChooser.addObject("Middle Cube TIMED", new TimedMiddle()); //TODO Dail in TimedMiddle()
+		autonChooser.addObject("Left Cube TIMED", new LeftTimed()); //TODO Dail in LeftTimed()
+		autonChooser.addObject("Right Cube TIMED", new RightTimed()); //TOOD Dail in RightTimed()
 		System.out.println("AutonChooser Created - Robot.java : 80");
 		
 		SmartDashboard.putData("Auto mode", autonChooser);
@@ -122,18 +118,9 @@ public class Robot extends TimedRobot {
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
-		
-		//SmartDashboard.putNumber("PDP Temp: ", pdp.getTemperature()*2.8 + 30);
-		//SmartDashboard.putNumber("Power Consumed", pdp.getTotalPower
-		SmartDashboard.putNumber("X-Axis Acceleration", accel.getX());
-		SmartDashboard.putNumber("Y-Axis Acceleration", accel.getY());
 	}
 
 	@Override
 	public void testPeriodic() {
-		System.out.println("TOP " + elevator.topLimit.get());
-		System.out.println("Bottom" + elevator.bottomLimit.get());
-		Command arm = new LiftArm();
-		arm.start();
 	}
 }
