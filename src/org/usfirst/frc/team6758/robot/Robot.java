@@ -7,12 +7,15 @@
 
 package org.usfirst.frc.team6758.robot;
 
+import org.usfirst.frc.team6758.robot.autonomous.DriveBackwards;
 import org.usfirst.frc.team6758.robot.autonomous.DriveForward;
 import org.usfirst.frc.team6758.robot.autonomous.DriveStraight;
 import org.usfirst.frc.team6758.robot.autonomous.LeftTimed;
 import org.usfirst.frc.team6758.robot.autonomous.Nothing;
 import org.usfirst.frc.team6758.robot.autonomous.RightTimed;
 import org.usfirst.frc.team6758.robot.autonomous.TimedMiddle;
+import org.usfirst.frc.team6758.robot.autonomous.TurnClock;
+import org.usfirst.frc.team6758.robot.autonomous.TurnCounter;
 import org.usfirst.frc.team6758.robot.subsystems.Climber;
 import org.usfirst.frc.team6758.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team6758.robot.subsystems.Elevator;
@@ -67,7 +70,7 @@ public class Robot extends TimedRobot {
 		camera.setFPS(30);
 		
 		//Auton chooser being activated
-		autonChooser.addDefault("Nothing", new Nothing());
+		autonChooser.addDefault("Nothing", new Nothing(15));
 		autonChooser.addObject("Drive Straight - 12s", new DriveForward(12));
 		autonChooser.addObject("Drive Straight - 5s", new DriveStraight());
 		autonChooser.addObject("Middle Cube TIMED", timedMiddle); //TODO Dail in TimedMiddle()
@@ -130,5 +133,23 @@ public class Robot extends TimedRobot {
 
 	@Override
 	public void testPeriodic() {
+		System.out.println("\nThis Should be Turning Clockwise. \nDO NOT TOUCH THE ROBOT");
+		new Nothing(2).start();
+		System.out.println("Starting...");
+		new TurnClock(6).start();
+		System.out.println("\nThis Should be Turning Counterclockwise. \nDO NOT TOUCH THE ROBOT");
+		new Nothing(2).start();
+		System.out.println("Starting...");
+		new TurnCounter(6).start();
+		System.out.println("\nThis Should be Driving Forward. \nDO NOT TOUCH THE ROBOT");
+		new Nothing(2).start();
+		System.out.println("Starting...");
+		new DriveForward(6).start();
+		System.out.println("\nThis Should be Driving Backwards. \nDO NOT TOUCH THE ROBOT");
+		new Nothing(2).start();
+		System.out.println("Starting...");
+		new DriveBackwards(6).start();
+		System.out.println("\nTest Complete. \nYou may now disable the robot.");
+		new Nothing(10).start();
 	}
 }
