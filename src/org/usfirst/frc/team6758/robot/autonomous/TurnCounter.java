@@ -25,7 +25,7 @@ public class TurnCounter extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveTrain.driveCounter(RobotMap.defaultAutonSpeed+.25);
+    	Robot.driveTrain.driveCounter(RobotMap.defaultAutonSpeed+.25); //there is a fast auton speed in robotmap if you would like to use it
     }
 
     // Make this return true when this Command no longer needs to run execute()

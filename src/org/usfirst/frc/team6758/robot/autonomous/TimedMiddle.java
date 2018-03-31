@@ -2,7 +2,6 @@ package org.usfirst.frc.team6758.robot.autonomous;
 
 import org.usfirst.frc.team6758.robot.Robot;
 import org.usfirst.frc.team6758.robot.commands.ArmRelease;
-import org.usfirst.frc.team6758.robot.commands.LiftArm;
 import org.usfirst.frc.team6758.robot.commands.LowerArmTimed;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
