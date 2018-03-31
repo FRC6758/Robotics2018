@@ -36,22 +36,31 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void driveForward(double speed) {
-		driveTrain.arcadeDrive(speed, 0);
+		//not sure if this goes backwards or forwards
+		left.set(RobotMap.defaultAutonSpeed-.05);
+		right.set(-RobotMap.defaultAutonSpeed);
 	}
 	
 	public void driveBackward(double speed) {
-		driveTrain.arcadeDrive(-speed, 0);
+		//This may drive forward
+		left.set(-RobotMap.defaultAutonSpeed-.05);
+		right.set(RobotMap.defaultAutonSpeed);
 	}
 	
 	public void driveClock(double speed) {
-		driveTrain.arcadeDrive(0, speed);
+		//This might go Counterclockwise
+		left.set(RobotMap.defaultAutonSpeed);
+		right.set(RobotMap.defaultAutonSpeed);
 	}
 	
 	public void driveCounter(double speed) {
-		driveTrain.arcadeDrive(0, -speed);
+		//This might go Clockwise
+		left.set(-RobotMap.defaultAutonSpeed);
+		right.set(-RobotMap.defaultAutonSpeed);
 	}
 	
 	public void stop() {
-		driveTrain.arcadeDrive(0, 0);
+		left.set(0);
+		right.set(0);
 	}
 }
