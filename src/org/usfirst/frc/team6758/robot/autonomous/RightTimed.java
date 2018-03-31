@@ -19,14 +19,16 @@ public class RightTimed extends CommandGroup {
     public void finishInit() {
     	if(Robot.switchPosition == 'R') {
     		System.out.println("Executing Right Switch Position Auton - RightTimed.java");
-    			addSequential(new DriveForward(4.75));
-    			addSequential(new TurnClock(2));			
-    			addSequential(new DriveForward(1));
-    			addParallel(new LiftArm());
+    			addSequential(new DriveForward(3));
+    			addSequential(new TurnCounter(.6));
+    			addSequential(new DriveForward(2));
+    			//addSequential(new TurnClock(2));			
+    			//addSequential(new DriveForward(1));
+    			addSequential(new LiftArm());
     			addSequential(new ArmRelease());
         	}
         	else if(Robot.switchPosition == 'L') {
-        		addSequential(new DriveForward(8));
+        		addSequential(new DriveForward(4));
         		System.out.println("This feature is coming soon!");
 //        		addSequential(new DriveForward(4.75));
 //        		addSequential(new TurnClock(2));			

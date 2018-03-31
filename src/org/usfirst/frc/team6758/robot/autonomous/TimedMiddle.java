@@ -22,9 +22,9 @@ public class TimedMiddle extends CommandGroup{
 		if(Robot.switchPosition == 'L') {
 			System.out.println("Executing Left Switch Position Auton - TimedMiddle.java");
 			addSequential(new DriveForward(1)); //stops before boxes in the middle
-			addSequential(new TurnCounter(1)); //~40 degrees
-			addSequential(new DriveForward(2.1)); //completes the journey
-			addSequential(new TurnClock(.45));
+			addSequential(new TurnCounter(1.2));
+			addSequential(new DriveForward(2.5)); //completes the journey
+			addSequential(new TurnClock(.4));
 			addSequential(new DriveForward(2));
 			addSequential(new LowerArmTimed(.25));
 			addSequential(new ArmRelease());
@@ -32,9 +32,9 @@ public class TimedMiddle extends CommandGroup{
 		else if(Robot.switchPosition == 'R') {
 			System.out.println("Executing Right Switch Position Auton - TimedMiddle.java");
 			addSequential(new DriveForward(1));
-			addSequential(new TurnClock(1));
-			addSequential(new DriveForward(2.1));
-			addSequential(new TurnCounter(.45));
+			addSequential(new TurnClock(.5));
+			addSequential(new DriveForward(1.8));
+			addSequential(new TurnCounter(.55));
 			addSequential(new DriveForward(2));
 			addSequential(new LowerArmTimed(.25));
 			addSequential(new ArmRelease());

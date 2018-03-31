@@ -17,14 +17,17 @@ public class LeftTimed extends CommandGroup {
     
     public void finishInit() {
     	if(Robot.switchPosition == 'L') {
-			addSequential(new DriveForward(4.75));
-			addSequential(new TurnClock(1));
+    		addSequential(new TurnCounter(.2));
+			addSequential(new DriveForward(3));
+			addSequential(new TurnClock(.45));
 			addSequential(new DriveForward(2));
-			addParallel(new LiftArm());
+			//addSequential(new TurnClock(1));
+			//addSequential(new DriveForward(2));
+			addSequential(new LiftArm());
 			addSequential(new ArmRelease());
 		}
 		else if(Robot.switchPosition == 'R') {
-			addSequential(new DriveForward(7));
+			addSequential(new DriveForward(4));
 			System.out.println("This function has not arrived yet, however; I will go straight");
 //			addSequential(new DriveForward(6));
 //			addSequential(new TurnClock(1));
