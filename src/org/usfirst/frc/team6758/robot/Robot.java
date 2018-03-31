@@ -8,6 +8,7 @@
 package org.usfirst.frc.team6758.robot;
 
 import org.usfirst.frc.team6758.robot.autonomous.DriveForward;
+import org.usfirst.frc.team6758.robot.autonomous.DriveStraight;
 import org.usfirst.frc.team6758.robot.autonomous.LeftTimed;
 import org.usfirst.frc.team6758.robot.autonomous.Nothing;
 import org.usfirst.frc.team6758.robot.autonomous.RightTimed;
@@ -67,7 +68,8 @@ public class Robot extends TimedRobot {
 		
 		//Auton chooser being activated
 		autonChooser.addDefault("Nothing", new Nothing());
-		autonChooser.addObject("Drive Forward TIMED", new DriveForward(12));
+		autonChooser.addObject("Drive Straight - 12s", new DriveForward(12));
+		autonChooser.addObject("Drive Straight - 5s", new DriveStraight());
 		autonChooser.addObject("Middle Cube TIMED", timedMiddle); //TODO Dail in TimedMiddle()
 		autonChooser.addObject("Left Cube TIMED", timedLeft); //TODO Dail in LeftTimed()
 		autonChooser.addObject("Right Cube TIMED", timedRight); //TOOD Dail in RightTimed()

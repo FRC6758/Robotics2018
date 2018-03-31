@@ -39,7 +39,7 @@ public class RobotMap {
 	public static final double elevatorAutonSpeed = .85;
 	public static final double defaultAutonSpeed = .6;
 	public static final double twistSlowMultiplier = .85; // .78
-	public static final double autonFastSpeed = .75;
+	public static final double autonFastSpeed = .85;
 	
 	/*
 	 * Thors Hammer Encoder
