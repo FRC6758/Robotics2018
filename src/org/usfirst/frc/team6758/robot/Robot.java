@@ -25,7 +25,9 @@ public class Robot extends TimedRobot {
 	public static char switchPosition;
 	
 	Command m_autonomousCommand;
-	
+
+	public static Rect[] rts;
+
 	public UsbCamera camera;
 
 	public static Compressor compressor = new Compressor(0);
@@ -78,18 +80,8 @@ public class Robot extends TimedRobot {
 	}
 
     public void autonData(Point[] pts, Rect[] rts) {
-	    // TODO: Do something with the data
-        //x, y, height, width, area = rect
-        System.out.print(rts.length);
-        System.out.print("I think I found it....");
-        Rect[] target = OperationVision.checkRectum(rts);
-        if(target.equals(rts)){
-            System.out.print("NO NO NO NO NO NO.....");
-        }
-        else{
-            System.out.print("Found it");
-
-        }
+	    //TODO: Do something with the data
+        this.rts = rts;
     }
 
 	@Override

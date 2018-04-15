@@ -7,8 +7,9 @@ public class OperationVision {
 
     }
     public static final int mist = 5;
+    private static final double WIDTH = 50.8;
 
-    public static Rect[] checkRectum(Rect[] rts){
+    public static Rect[] checkRect(Rect[] rts){
         for(int x=0; x < rts.length; x++){
             for(int y=0; y<rts.length; y++){
                 int theHeightDifference = Math.abs(rts[x].height - rts[y].height);
@@ -22,7 +23,22 @@ public class OperationVision {
                 }
             }
         }
-        return rts;
+        return null; //TODO Im scared
     }
+    public static double checkDistance(Rect[] rts){
+        //In millimeters
+        //The width of the tape is: 2in?
+        int width = rts[0].width;
+
+        return 0; //TODO More zeros???
+    }
+
+    public static double MMToIn(double millimeter){
+       return millimeter * .039370078740158;
+    }
+    public static double InToMM(double inch){
+        return inch * 25.4;
+    }
+
 
 }
