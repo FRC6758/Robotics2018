@@ -7,48 +7,32 @@
 
 package org.usfirst.frc.team6758.robot;
 
-import org.usfirst.frc.team6758.robot.autonomous.DriveBackwards;
-import org.usfirst.frc.team6758.robot.autonomous.DriveForward;
-import org.usfirst.frc.team6758.robot.autonomous.DriveStraight;
-import org.usfirst.frc.team6758.robot.autonomous.LeftTimed;
-import org.usfirst.frc.team6758.robot.autonomous.Nothing;
-import org.usfirst.frc.team6758.robot.autonomous.RightTimed;
-import org.usfirst.frc.team6758.robot.autonomous.TimedMiddle;
-import org.usfirst.frc.team6758.robot.autonomous.TurnClock;
-import org.usfirst.frc.team6758.robot.autonomous.TurnCounter;
-import org.usfirst.frc.team6758.robot.subsystems.Climber;
-import org.usfirst.frc.team6758.robot.subsystems.DriveTrain;
-import org.usfirst.frc.team6758.robot.subsystems.Elevator;
-import org.usfirst.frc.team6758.robot.subsystems.Pneumatics;
+import org.opencv.core.*;
+import org.usfirst.frc.team6758.robot.autonomous.*;
+import org.usfirst.frc.team6758.robot.subsystems.*;
 
 import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+import java.net.Socket;
 
 public class Robot extends TimedRobot {
-	double controllerPOV;
-	
 	public static OI m_oi;
-	public static Joystick stick = new Joystick(0);
 	public static char switchPosition;
 	
 	Command m_autonomousCommand;
-	public SendableChooser<Command> m_chooser;
-	public static SendableChooser<Integer> locationChooser;
 	
 	public UsbCamera camera;
 
 	public static Compressor compressor = new Compressor(0);
-	
-	protected int position;
+
+	public static Socket sock;
+
+	public static final int mist = 5;
 	
 	public static final DriveTrain driveTrain = new DriveTrain();
 	public static final Pneumatics pneumatics = new Pneumatics();
@@ -73,13 +57,17 @@ public class Robot extends TimedRobot {
 		autonChooser.addDefault("Nothing", new Nothing(15));
 		autonChooser.addObject("Drive Straight - 12s", new DriveForward(12));
 		autonChooser.addObject("Drive Straight - 5s", new DriveStraight());
-		autonChooser.addObject("Middle Cube TIMED", timedMiddle); //TODO Dail in TimedMiddle()
-		autonChooser.addObject("Left Cube TIMED", timedLeft); //TODO Dail in LeftTimed()
-		autonChooser.addObject("Right Cube TIMED", timedRight); //TOOD Dail in RightTimed()
+		autonChooser.addObject("Middle Cube TIMED", timedMiddle); //TODO Dial in TimedMiddle()
+		autonChooser.addObject("Left Cube TIMED", timedLeft); //TODO Dial in LeftTimed()
+		autonChooser.addObject("Right Cube TIMED", timedRight); //TODO Dial in RightTimed()
 		System.out.println("AutonChooser Created - Robot.java : 80");
 		
 		SmartDashboard.putData("Auto mode", autonChooser);
-		
+
+        sock = new Socket();
+        Thread thr = new Thread(new CommsThread(this));
+        thr.start();
+
 		compressor.setClosedLoopControl(true);
 	}
 	
@@ -90,6 +78,38 @@ public class Robot extends TimedRobot {
 	@Override
 	public void disabledInit() {
 	}
+
+    public void autonData(Point[] pts, Rect[] rts) {
+	    // TODO: Do something with the data
+        //x, y, height, width, area = rect
+        System.out.print(rts.length);
+        System.out.print("I think I found it....");
+        Rect[] target = checkRectum(rts);
+        if(target.equals(rts)){
+            System.out.print("NO NO NO NO NO NO.....");
+        }
+        else{
+            System.out.print("Found it");
+
+        }
+    }
+
+    private Rect[] checkRectum(Rect[] rts){
+        for(int x=0; x < rts.length; x++){
+            for(int y=0; y<rts.length; y++){
+                int theHeightDifference = Math.abs(rts[x].height - rts[y].height);
+                int theWidthDifference = Math.abs(rts[x].width - rts[y].width);
+                if(theHeightDifference<=mist && theWidthDifference<=mist){
+                    Rect[] target = new Rect[2];
+                    target[0] = rts[x];
+                    target[1] = rts[y];
+                    System.out.print("I have found what you are looking for.");
+                    return target;
+                }
+            }
+        }
+        return rts;
+    }
 
 	@Override
 	public void disabledPeriodic() {
