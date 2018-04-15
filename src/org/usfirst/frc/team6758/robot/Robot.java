@@ -31,8 +31,6 @@ public class Robot extends TimedRobot {
 	public static Compressor compressor = new Compressor(0);
 
 	public static Socket sock;
-
-	public static final int mist = 5;
 	
 	public static final DriveTrain driveTrain = new DriveTrain();
 	public static final Pneumatics pneumatics = new Pneumatics();
@@ -84,7 +82,7 @@ public class Robot extends TimedRobot {
         //x, y, height, width, area = rect
         System.out.print(rts.length);
         System.out.print("I think I found it....");
-        Rect[] target = checkRectum(rts);
+        Rect[] target = OperationVision.checkRectum(rts);
         if(target.equals(rts)){
             System.out.print("NO NO NO NO NO NO.....");
         }
@@ -92,23 +90,6 @@ public class Robot extends TimedRobot {
             System.out.print("Found it");
 
         }
-    }
-
-    private Rect[] checkRectum(Rect[] rts){
-        for(int x=0; x < rts.length; x++){
-            for(int y=0; y<rts.length; y++){
-                int theHeightDifference = Math.abs(rts[x].height - rts[y].height);
-                int theWidthDifference = Math.abs(rts[x].width - rts[y].width);
-                if(theHeightDifference<=mist && theWidthDifference<=mist){
-                    Rect[] target = new Rect[2];
-                    target[0] = rts[x];
-                    target[1] = rts[y];
-                    System.out.print("I have found what you are looking for.");
-                    return target;
-                }
-            }
-        }
-        return rts;
     }
 
 	@Override
