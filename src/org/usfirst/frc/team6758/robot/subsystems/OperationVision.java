@@ -1,8 +1,10 @@
 package org.usfirst.frc.team6758.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import org.opencv.core.Rect;
 
 public class OperationVision {
+    
     OperationVision(){
 
     }
@@ -25,6 +27,7 @@ public class OperationVision {
         }
         return null; //TODO Im scared
     }
+
     public static double checkDistance(Rect[] rts){
         //In millimeters
         //The width of the tape is: 2in?

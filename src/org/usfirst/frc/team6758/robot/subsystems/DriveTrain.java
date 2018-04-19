@@ -1,5 +1,6 @@
 package org.usfirst.frc.team6758.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import org.usfirst.frc.team6758.robot.RobotMap;
 import org.usfirst.frc.team6758.robot.commands.DriveRobot;
 
@@ -16,7 +17,7 @@ public class DriveTrain extends Subsystem {
 	public static WPI_TalonSRX rearLeft = new WPI_TalonSRX(RobotMap.mKeegan);
 	public static WPI_TalonSRX frontRight = new WPI_TalonSRX(RobotMap.mApache);
 	public static WPI_TalonSRX rearRight = new WPI_TalonSRX(RobotMap.mAndo);
-	
+
 	public SpeedControllerGroup left = new SpeedControllerGroup(frontLeft, rearLeft);
 	public SpeedControllerGroup right = new SpeedControllerGroup(frontRight, rearRight);
 	
@@ -24,7 +25,17 @@ public class DriveTrain extends Subsystem {
 	
 	public Encoder encLeft = new Encoder(RobotMap.encLPortA, RobotMap.encLPortB, false, Encoder.EncodingType.k4X);
 	public Encoder encRight = new Encoder(RobotMap.encRPortA, RobotMap.encRPortB, false, Encoder.EncodingType.k4X);
-	
+
+	public DriveTrain(){
+	    frontLeft.setSubsystem("DriveTrain");
+        frontRight.setSubsystem("DriveTrain");
+        rearLeft.setSubsystem("DriveTrain");
+        rearRight.setSubsystem("DriveTrain");
+        frontLeft.getTemperature();
+        frontLeft.set(ControlMode.Follower, rearLeft.getBaseID());
+        frontRight.set(ControlMode.Follower, rearRight.getBaseID());
+    }
+
 	@Override
 	protected void initDefaultCommand() {
 		setDefaultCommand(new DriveRobot());

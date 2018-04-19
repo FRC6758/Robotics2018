@@ -7,6 +7,9 @@
 
 package org.usfirst.frc.team6758.robot;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import org.opencv.core.*;
 import org.usfirst.frc.team6758.robot.autonomous.*;
 import org.usfirst.frc.team6758.robot.subsystems.*;
@@ -124,25 +127,16 @@ public class Robot extends TimedRobot {
 		Scheduler.getInstance().run();
 	}
 
+	public static WPI_TalonSRX motor = new WPI_TalonSRX(7);
+	double pValue = 0.15 , iValue = 0.1 , dValue = 1, output;
 	@Override
 	public void testPeriodic() {
-		System.out.println("\nThis Should be Turning Clockwise. \nDO NOT TOUCH THE ROBOT");
-		new Nothing(2).start();
-		System.out.println("Starting...");
-		new TurnClock(6).start();
-		System.out.println("\nThis Should be Turning Counterclockwise. \nDO NOT TOUCH THE ROBOT");
-		new Nothing(2).start();
-		System.out.println("Starting...");
-		new TurnCounter(6).start();
-		System.out.println("\nThis Should be Driving Forward. \nDO NOT TOUCH THE ROBOT");
-		new Nothing(2).start();
-		System.out.println("Starting...");
-		new DriveForward(6).start();
-		System.out.println("\nThis Should be Driving Backwards. \nDO NOT TOUCH THE ROBOT");
-		new Nothing(2).start();
-		System.out.println("Starting...");
-		new DriveBackwards(6).start();
-		System.out.println("\nTest Complete. \nYou may now disable the robot.");
-		new Nothing(10).start();
+		motor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, 10);
+		motor.config_kP(0, pValue, 50);
+		motor.config_kI(0, iValue ,50);
+		motor.config_kD(0, dValue, 50);
+		output = SmartDashboard.getNumber("Position", 0);
+		motor.pidWrite(output);
+
 	}
 }
